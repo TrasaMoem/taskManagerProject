@@ -11,18 +11,16 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-public class TaskService extends InputHandler {
+public class TaskService {
+    private final InputHandler inputHandler = new InputHandler();
+    private final LocalDateTime now = LocalDateTime.now();
 
-    public static final String EVERYDAY_FILE_NAME = "everydayTasks.json";
-    public static final String GLOBAL_FILE_NAME = "globalTasks.json";
-    public static final LocalDateTime now = LocalDateTime.now();
-
-    private static final Gson gson = new GsonBuilder()
+    private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .setPrettyPrinting()
             .create();
 
-    public static void saveEverydayTasks(ArrayList<Task> tasks, String fileName) {
+    public void saveEverydayTasks(ArrayList<Task> tasks, String fileName) {
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(tasks, writer);
         } catch (Exception e) {
@@ -30,7 +28,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void saveGlobalTasks(ArrayList<Task> tasks, String fileName) {
+    public void saveGlobalTasks(ArrayList<Task> tasks, String fileName) {
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(tasks, writer);
         } catch (Exception e) {
@@ -38,7 +36,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static ArrayList<Task> loadEverydayTasks(String fileName) {
+    public ArrayList<Task> loadEverydayTasks(String fileName) {
         try (FileReader reader = new FileReader(fileName)) {
             Type taskListType = new TypeToken<ArrayList<Task>>(){}.getType();
             return gson.fromJson(reader, taskListType);
@@ -48,7 +46,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static ArrayList<Task> loadGlobalTasks(String fileName) {
+    public ArrayList<Task> loadGlobalTasks(String fileName) {
         try (FileReader reader = new FileReader(fileName)) {
             Type taskListType = new TypeToken<ArrayList<Task>>(){}.getType();
             return gson.fromJson(reader, taskListType);
@@ -58,7 +56,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void sortByName(Scanner sc, ArrayList<Task> list, boolean everydayOrGlobal, boolean SortFromAtoZorZtoA) {
+    public void sortByName(ArrayList<Task> list, boolean everydayOrGlobal, boolean SortFromAtoZorZtoA) {
         // Sort from A to Z (true)
         if (SortFromAtoZorZtoA) {
             list.sort(Comparator.comparing(Task::getName));
@@ -72,7 +70,7 @@ public class TaskService extends InputHandler {
 
     }
 
-    public static void sortByPriority(Scanner sc, ArrayList<Task> list, boolean everydayOrGlobal, boolean sortStartsFromSmallestOrLargestPriority) {
+    public void sortByPriority(ArrayList<Task> list, boolean everydayOrGlobal, boolean sortStartsFromSmallestOrLargestPriority) {
         // Sort by priority from smallest to largest
         if (sortStartsFromSmallestOrLargestPriority) {
             while (true) {
@@ -125,7 +123,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void sortByDeadline(Scanner sc, ArrayList<Task> list, boolean smallestOrLargestDeadline, boolean everydayOrGlobal) {
+    public void sortByDeadline(Scanner sc, ArrayList<Task> list, boolean smallestOrLargestDeadline, boolean everydayOrGlobal) {
         if (smallestOrLargestDeadline) {
             list.sort(Comparator.comparing(Task::getDeadline));
             System.out.println("Successfully completed sort of everyday Tasks by deadline from Smallest to Largest");
@@ -135,23 +133,23 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void edit(Scanner sc, ArrayList<Task> list, String nameOrDescriptionOrPriorityOrDeadline, int j, boolean everydayOrGlobal) {
+    public void edit(Scanner sc, ArrayList<Task> list, String nameOrDescriptionOrPriorityOrDeadline, int j, boolean everydayOrGlobal) {
         // Edit name of the task
         if (nameOrDescriptionOrPriorityOrDeadline.equalsIgnoreCase("name")) {
             System.out.println("Enter new name of the Task (old: " + list.get(j).getName() + "): ");
-            list.get(j).setName(readString(sc));
+            list.get(j).setName(inputHandler.readString(sc));
             System.out.println("New name " + list.get(j).getName() + " has been edited successfully!");
         }
         // Edit description of the task
         else if (nameOrDescriptionOrPriorityOrDeadline.equalsIgnoreCase("description")) {
             System.out.println("Enter new description of the Task (old: " + list.get(j).getDescription() + "): ");
-            list.get(j).setDescription(readString(sc));
+            list.get(j).setDescription(inputHandler.readString(sc));
             System.out.println("New description " + list.get(j).getDescription() + " has been edited successfully!");
         }
         // Edit priority of the task
         else if (nameOrDescriptionOrPriorityOrDeadline.equalsIgnoreCase("priority")) {
             System.out.println("Enter new priority of the Task (old: " + list.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
-            list.get(j).setPriority(readNumber(sc,Integer.MAX_VALUE));
+            list.get(j).setPriority(inputHandler.readNumber(sc, Integer.MAX_VALUE));
             System.out.println("New priority " + list.get(j).getPriority() + " has been edited successfully!");
         }
         // Edit deadline of the task
@@ -175,7 +173,7 @@ public class TaskService extends InputHandler {
                 System.out.println("): ");
 
                 // Set new deadline in hours
-                list.get(j).setDeadline(readDateTime(sc,true));
+                list.get(j).setDeadline(inputHandler.readDateTime(sc, true));
 
                 Duration duration2 = Duration.between(now, list.get(j).getDeadline());
                 long days2 = duration2.toDays();
@@ -194,7 +192,7 @@ public class TaskService extends InputHandler {
                 System.out.println("): ");
 
                 // Set new deadline in days
-                list.get(j).setDeadline(readDateTime(sc,false));
+                list.get(j).setDeadline(inputHandler.readDateTime(sc, false));
 
                 Duration duration2 = Duration.between(now, list.get(j).getDeadline());
                 long days2 = duration2.toDays();
@@ -205,7 +203,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void search(Scanner sc, ArrayList<Task> list, String name) {
+    public void search(Scanner sc, ArrayList<Task> list, String name) {
         while (true) {
             // Search by first letter
             if (name.length() == 1) {
@@ -273,23 +271,23 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static void addOverdueTime(ArrayList<Task> list, Scanner sc, boolean everydayOrGlobal) {
+    public void addOverdueTime(ArrayList<Task> list, Scanner sc, boolean everydayOrGlobal) {
         System.out.println("Which task would you like to add more time to: ");
         LinkedHashMap<Integer,Integer> trueIndexOfTask = displayOverdueTasks(list, everydayOrGlobal);
         int actionsQuantity = trueIndexOfTask.size();
         System.out.println((actionsQuantity+1) + ") Back to previous page");
-        int overdueTaskAddTimeAction = readNumber(sc, actionsQuantity+1);
+        int overdueTaskAddTimeAction = inputHandler.readNumber(sc, actionsQuantity + 1);
 
         if (!(overdueTaskAddTimeAction == (actionsQuantity+1))) {
             if (!everydayOrGlobal) {
                 System.out.println("How much days would you like to add?");
-                int daysToAdd = readNumber(sc, Integer.MAX_VALUE);
+                int daysToAdd = inputHandler.readNumber(sc, Integer.MAX_VALUE);
                 Task correctTask = list.get(trueIndexOfTask.get(overdueTaskAddTimeAction-1));
                 correctTask.setDeadline(correctTask.getDeadline().plusDays(daysToAdd));
                 System.out.println("Successfully added more time to overdue global task");
             } else {
                 System.out.println("How much hours would you like to add?");
-                int hoursToAdd = readNumber(sc, Integer.MAX_VALUE);
+                int hoursToAdd = inputHandler.readNumber(sc, Integer.MAX_VALUE);
                 Task correctTask = list.get(trueIndexOfTask.get(overdueTaskAddTimeAction-1));
                 correctTask.setDeadline(correctTask.getDeadline().plusHours(hoursToAdd));
                 System.out.println("Successfully added more time to overdue everyday task");
@@ -297,7 +295,7 @@ public class TaskService extends InputHandler {
         }
     }
 
-    public static LinkedHashMap<Integer,Integer> displayOverdueTasks(ArrayList<Task> list, boolean everydayOrGlobal) {
+    public LinkedHashMap<Integer,Integer> displayOverdueTasks(ArrayList<Task> list, boolean everydayOrGlobal) {
         int overdueCounter = 0;
         LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
         for (Task task : list) {
@@ -322,20 +320,20 @@ public class TaskService extends InputHandler {
         return overdueTasksHash;
     }
 
-    public static void deleteOverdueTask(ArrayList<Task> list, Scanner sc, boolean everydayOrGlobal) {
+    public void deleteOverdueTask(ArrayList<Task> list, Scanner sc, boolean everydayOrGlobal) {
         System.out.println("Which Task would you like to delete?");
         LinkedHashMap<Integer,Integer> trueIndexOfTask = displayOverdueTasks(list, everydayOrGlobal);
         int actionsQuantity = trueIndexOfTask.size();
         System.out.println((actionsQuantity+1) + ") Delete all the overdue Tasks");
         System.out.println((actionsQuantity+2) + ") Back to previous page");
-        int overdueEverydayTaskDeleteAction = readNumber(sc, actionsQuantity+2);
+        int overdueEverydayTaskDeleteAction = inputHandler.readNumber(sc, actionsQuantity + 2);
 
         if (overdueEverydayTaskDeleteAction == (actionsQuantity+1)) {
             System.out.println("Are you sure you want to delete ALL the overdue Tasks permanently?");
             System.out.println("1. Yes, I sure");
             System.out.println("2. Dont delete ALL my overdue Tasks");
 
-            int sure = readNumber(sc, 2);
+            int sure = inputHandler.readNumber(sc, 2);
             // Warning before deleting all overdue tasks
             if (sure == 1) {
                 for (int i = actionsQuantity; i > 0; i--) {

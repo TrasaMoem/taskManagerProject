@@ -4,22 +4,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UISystem extends TaskService {
+public class UISystem {
+    private final LocalDateTime now = LocalDateTime.now();
+    private final InputHandler inputHandler = new InputHandler();
 
-    public static void delay(Scanner sc) {
+    public void delay(Scanner sc) {
         System.out.println("Print 1 to continue: ");
         while(true) {
-            int delaying = readNumber(sc, 1);
+            int delaying = inputHandler.readNumber(sc, 1);
 
             if (delaying == 1) {
                 break;
             }
         }
     }
-    private static void sure(Scanner sc) {
+    private void sure(Scanner sc) {
 
     }
-    public static void display(Scanner sc, ArrayList<Task> list, boolean everydayOrGlobal) {
+    public void display(Scanner sc, ArrayList<Task> list, boolean everydayOrGlobal) {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
@@ -58,7 +60,7 @@ public class UISystem extends TaskService {
         }
     }
 
-    public static void statistics(Scanner sc, ArrayList<Task> list, String everydayOrGlobalOrGeneral) {
+    public void statistics(Scanner sc, ArrayList<Task> list, String everydayOrGlobalOrGeneral) {
         int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, moreThanHighPriorityCounter = 0, counterOfActiveTasks = 0;
         Task nearest = null, farthest = null;
         long totalMinutes = 0;

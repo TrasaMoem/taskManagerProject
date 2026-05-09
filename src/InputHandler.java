@@ -3,12 +3,12 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    public static int readNumber(Scanner sc, int actionsQuantity) {
+    public int readNumber(Scanner sc, int limit) {
         while (true) {
             int action;
             try {
                 action = sc.nextInt();
-                if (action < 1 || action > actionsQuantity) {
+                if (action < 1 || action > limit) {
                     System.out.println("Invalid input, please try again");
                     sc.nextLine();
                     continue;
@@ -23,7 +23,7 @@ public class InputHandler {
         }
     }
 
-    public static String readString(Scanner sc) {
+    public String readString(Scanner sc) {
         while(true) {
             String str;
             try {
@@ -37,7 +37,7 @@ public class InputHandler {
         }
     }
 
-    public static LocalDateTime readDateTime(Scanner sc, boolean everydayOrGlobal) {
+    public LocalDateTime readDateTime(Scanner sc, boolean everydayOrGlobal) {
         if (everydayOrGlobal) {
             while(true) {
                 LocalDateTime dateTime;
