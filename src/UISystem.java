@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class UISystem {
@@ -20,6 +21,27 @@ public class UISystem {
     }
     private void sure(Scanner sc) {
 
+    }
+    public void displayOverdueTasks(ArrayList<Task> list, TaskScale scale) {
+        int overdueCounter = 0;
+        for (Task task : list) {
+            if (task.getDeadline().isBefore(now)) {
+                overdueCounter++;
+                System.out.print(overdueCounter + ") " + task.getName());
+
+                Duration duration = Duration.between(now, task.getDeadline()).abs();
+                long days = duration.toDays(), hours = duration.toHours() % 24, minutes = duration.toMinutes() % 60;
+
+                if (scale == TaskScale.EVERYDAY) {
+                    System.out.println(" - passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
+                } else {
+                    System.out.println(" - passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
+                }
+            }
+        }
+        if (overdueCounter == 0) {
+            System.out.println("No overdue tasks");
+        }
     }
     public void display(ArrayList<Task> list, boolean everydayOrGlobal) {
         if (list.isEmpty()) {

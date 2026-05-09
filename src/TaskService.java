@@ -272,61 +272,43 @@ public class TaskService {
         }
     }
 
-    public void addOverdueTime(ArrayList<Task> list, TaskScale scale) {
-        System.out.println("Which task would you like to add more time to: ");
-        LinkedHashMap<Integer,Integer> trueIndexOfTask = displayOverdueTasks(list, scale);
-        int actionsQuantity = trueIndexOfTask.size();
-        System.out.println((actionsQuantity+1) + ") Back to previous page");
+    public void addToOverdueTaskTime(ArrayList<Task> list, TaskScale scale) {
+        LinkedHashMap<Integer,Integer> trueIndexOfTasks = positionsOfOverdueTasks(list);
+        int actionsQuantity = trueIndexOfTasks.size();
         int overdueTaskAddTimeAction = inputHandler.readNumber(actionsQuantity + 1);
 
         if (!(overdueTaskAddTimeAction == (actionsQuantity+1))) {
             if (scale == TaskScale.EVERYDAY) {
                 System.out.println("How much hours would you like to add?");
                 int hoursToAdd = inputHandler.readNumber(Integer.MAX_VALUE);
-                Task correctTask = list.get(trueIndexOfTask.get(overdueTaskAddTimeAction-1));
+                Task correctTask = list.get(trueIndexOfTasks.get(overdueTaskAddTimeAction-1));
                 correctTask.setDeadline(correctTask.getDeadline().plusHours(hoursToAdd));
                 System.out.println("Successfully added more time to overdue everyday task");
             } else {
                 System.out.println("How much days would you like to add?");
                 int daysToAdd = inputHandler.readNumber(Integer.MAX_VALUE);
-                Task correctTask = list.get(trueIndexOfTask.get(overdueTaskAddTimeAction-1));
+                Task correctTask = list.get(trueIndexOfTasks.get(overdueTaskAddTimeAction-1));
                 correctTask.setDeadline(correctTask.getDeadline().plusDays(daysToAdd));
                 System.out.println("Successfully added more time to overdue global task");
             }
         }
     }
 
-    public LinkedHashMap<Integer,Integer> displayOverdueTasks(ArrayList<Task> list, TaskScale scale) {
+    public LinkedHashMap<Integer,Integer> positionsOfOverdueTasks(ArrayList<Task> list) {
         int overdueCounter = 0;
         LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
         for (Task task : list) {
             if (task.getDeadline().isBefore(now)) {
                 overdueTasksHash.put(overdueCounter, list.indexOf(task));
                 overdueCounter++;
-                System.out.print(overdueCounter + ") " + task.getName());
-
-                Duration duration = Duration.between(now, task.getDeadline()).abs();
-                long days = duration.toDays(), hours = duration.toHours() % 24, minutes = duration.toMinutes() % 60;
-
-                if (scale == TaskScale.EVERYDAY) {
-                    System.out.println(" - passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                } else {
-                    System.out.println(" - passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                }
             }
-        }
-        if (overdueCounter == 0) {
-            System.out.println("No overdue tasks");
         }
         return overdueTasksHash;
     }
 
-    public void deleteOverdueTask(ArrayList<Task> list, TaskScale scale) {
-        System.out.println("Which Task would you like to delete?");
-        LinkedHashMap<Integer,Integer> trueIndexOfTask = displayOverdueTasks(list, scale);
+    public void deleteOverdueTask(ArrayList<Task> list) {
+        LinkedHashMap<Integer,Integer> trueIndexOfTask = positionsOfOverdueTasks(list);
         int actionsQuantity = trueIndexOfTask.size();
-        System.out.println((actionsQuantity+1) + ") Delete all the overdue Tasks");
-        System.out.println((actionsQuantity+2) + ") Back to previous page");
         int overdueEverydayTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);
 
         if (overdueEverydayTaskDeleteAction == (actionsQuantity+1)) {
