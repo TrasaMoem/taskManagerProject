@@ -156,6 +156,7 @@ public class Main extends UISystem {
                                         // Edit deadline of everyday task
                                         else if (editSpecificParameter == 4) {
                                             edit(sc, listOfEverydayTasks, "deadline", j, true);
+                                            delay(sc);
                                         }
                                         // Exit editing of everyday parameters
                                         else if (editSpecificParameter == 5) {
@@ -230,6 +231,7 @@ public class Main extends UISystem {
                                         // Edit deadline of global task
                                         else if (editSpecificParameter == 4) {
                                             edit(sc, listOfGlobalTasks, "deadline", j, false);
+                                            delay(sc);
                                         }
                                         // Exit editing global parameters
                                         else if (editSpecificParameter == 5) {

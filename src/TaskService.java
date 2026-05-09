@@ -182,7 +182,6 @@ public class TaskService extends InputHandler {
                 long hours2 = duration2.toHours() % 24;
                 long minutes2 = duration2.toMinutes() % 60;
                 System.out.println("New deadline: " + (days2 * 24 + hours2) + " hours " + minutes2 + " minutes left has been edited successfully!" );
-                //delay(sc);
             }
             // Edit global deadline
             else {
@@ -202,7 +201,6 @@ public class TaskService extends InputHandler {
                 long hours2 = duration2.toHours() % 24;
                 long minutes2 = duration2.toMinutes() % 60;
                 System.out.println("New deadline: " + days2 + " days " + hours2 + " hours " + minutes2 + " minutes left has been edited successfully!");
-                //delay(sc);
             }
         }
     }
@@ -301,7 +299,7 @@ public class TaskService extends InputHandler {
 
     public static LinkedHashMap<Integer,Integer> displayOverdueTasks(ArrayList<Task> list, boolean everydayOrGlobal) {
         int overdueCounter = 0;
-        LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<Integer, Integer>();
+        LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
         for (Task task : list) {
             if (task.getDeadline().isBefore(now)) {
                 overdueTasksHash.put(overdueCounter, list.indexOf(task));
