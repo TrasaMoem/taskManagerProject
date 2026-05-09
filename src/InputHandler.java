@@ -2,8 +2,8 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class InputHandler {
-
-    public int readNumber(Scanner sc, int limit) {
+    public int readNumber(int limit) {
+        Scanner sc = new Scanner(System.in);
         while (true) {
             int action;
             try {
@@ -19,11 +19,13 @@ public class InputHandler {
                 continue;
             }
             sc.nextLine();
+            sc.close();
             return action;
         }
     }
 
-    public String readString(Scanner sc) {
+    public String readString() {
+        Scanner sc = new Scanner(System.in);
         while(true) {
             String str;
             try {
@@ -33,12 +35,14 @@ public class InputHandler {
                 sc.nextLine();
                 continue;
             }
+            sc.close();
             return str;
         }
     }
 
-    public LocalDateTime readDateTime(Scanner sc, boolean everydayOrGlobal) {
-        if (everydayOrGlobal) {
+    public LocalDateTime readDateTime(TaskScale scale) {
+        Scanner sc = new Scanner(System.in);
+        if (scale == TaskScale.EVERYDAY) {
             while(true) {
                 LocalDateTime dateTime;
                 try {
@@ -54,6 +58,7 @@ public class InputHandler {
                     continue;
                 }
                 sc.nextLine();
+                sc.close();
                 return dateTime;
             }
         } else {
@@ -72,6 +77,7 @@ public class InputHandler {
                     continue;
                 }
                 sc.nextLine();
+                sc.close();
                 return dateTime;
             }
         }

@@ -8,10 +8,10 @@ public class UISystem {
     private final LocalDateTime now = LocalDateTime.now();
     private final InputHandler inputHandler = new InputHandler();
 
-    public void delay(Scanner sc) {
+    public void delay() {
         System.out.println("Print 1 to continue: ");
         while(true) {
-            int delaying = inputHandler.readNumber(sc, 1);
+            int delaying = inputHandler.readNumber(1);
 
             if (delaying == 1) {
                 break;
@@ -21,7 +21,7 @@ public class UISystem {
     private void sure(Scanner sc) {
 
     }
-    public void display(Scanner sc, ArrayList<Task> list, boolean everydayOrGlobal) {
+    public void display(ArrayList<Task> list, boolean everydayOrGlobal) {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
@@ -56,11 +56,11 @@ public class UISystem {
                     }
                 }
             }
-            delay(sc);
+            delay();
         }
     }
 
-    public void statistics(Scanner sc, ArrayList<Task> list, String everydayOrGlobalOrGeneral) {
+    public void statistics(ArrayList<Task> list, String everydayOrGlobalOrGeneral) {
         int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, moreThanHighPriorityCounter = 0, counterOfActiveTasks = 0;
         Task nearest = null, farthest = null;
         long totalMinutes = 0;
@@ -119,6 +119,7 @@ public class UISystem {
         if (nearest == null) {
             System.out.println("Farthest deadline: no active tasks");
         } else {
+            assert farthest != null;
             System.out.print("Farthest deadline: " + farthest.getName() + " ");
             DateTimeFormatter f = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             System.out.println(farthest.getDeadline().format(f));
