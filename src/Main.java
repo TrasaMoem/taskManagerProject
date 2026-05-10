@@ -133,21 +133,24 @@ public class Main {
                                         if (editSpecificParameter == 1) {
                                             System.out.println("Enter new name of the Task (old: " + listOfEverydayTasks.get(j).getName() + "): ");
                                             String newName = inputHandler.readString();
-                                            taskService.editName(listOfEverydayTasks, j, newName);
+                                            Task exactTask = listOfEverydayTasks.get(j);
+                                            taskService.editName(exactTask, newName);
                                             System.out.println("New name " + listOfEverydayTasks.get(j).getName() + " has been edited successfully!");
                                         }
                                         // Edit description of everyday task
                                         else if (editSpecificParameter == 2) {
                                             System.out.println("Enter new description of the Task (old: " + listOfEverydayTasks.get(j).getDescription() + "): ");
                                             String newDescription = inputHandler.readString();
-                                            taskService.editDescription(listOfEverydayTasks, j, newDescription);
+                                            Task exactTask = listOfEverydayTasks.get(j);
+                                            taskService.editDescription(exactTask, newDescription);
                                             System.out.println("New description " + listOfEverydayTasks.get(j).getDescription() + " has been edited successfully!");
                                         }
                                         // Edit priority of everyday task
                                         else if (editSpecificParameter == 3) {
                                             System.out.println("Enter new priority of the Task (old: " + listOfEverydayTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
                                             int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
-                                            taskService.editPriority(listOfEverydayTasks, j, newPriority);
+                                            Task exactTask = listOfEverydayTasks.get(j);
+                                            taskService.editPriority(exactTask, newPriority);
                                             System.out.println("New priority " + listOfEverydayTasks.get(j).getPriority() + " has been edited successfully!");
                                         }
                                         // Edit deadline of everyday task
@@ -156,7 +159,8 @@ public class Main {
                                             uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
                                             System.out.println("): ");
                                             LocalDateTime newDataTime = inputHandler.readDateTime(TaskScale.EVERYDAY);
-                                            taskService.editDeadline(listOfEverydayTasks, j, newDataTime);
+                                            Task exactTask = listOfEverydayTasks.get(j);
+                                            taskService.editDeadline(exactTask, newDataTime);
                                             uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
@@ -208,21 +212,24 @@ public class Main {
                                         if (editSpecificParameter == 1) {
                                             System.out.println("Enter new name of the Task (old: " + listOfGlobalTasks.get(j).getName() + "): ");
                                             String newName = inputHandler.readString();
-                                            taskService.editName(listOfGlobalTasks, j, newName);
+                                            Task exactTask = listOfGlobalTasks.get(j);
+                                            taskService.editName(exactTask, newName);
                                             System.out.println("New name " + listOfGlobalTasks.get(j).getName() + " has been edited successfully!");
                                         }
                                         // Edit description of global task
                                         else if (editSpecificParameter == 2) {
                                             System.out.println("Enter new description of the Task (old: " + listOfGlobalTasks.get(j).getDescription() + "): ");
                                             String newDescription = inputHandler.readString();
-                                            taskService.editDescription(listOfGlobalTasks, j, newDescription);
+                                            Task exactTask = listOfGlobalTasks.get(j);
+                                            taskService.editDescription(exactTask, newDescription);
                                             System.out.println("New description " + listOfGlobalTasks.get(j).getDescription() + " has been edited successfully!");
                                         }
                                         // Edit priority of global task
                                         else if (editSpecificParameter == 3) {
                                             System.out.println("Enter new priority of the Task (old: " + listOfGlobalTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
                                             int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
-                                            taskService.editPriority(listOfGlobalTasks, j, newPriority);
+                                            Task exactTask = listOfGlobalTasks.get(j);
+                                            taskService.editPriority(exactTask, newPriority);
                                             System.out.println("New priority " + listOfGlobalTasks.get(j).getPriority() + " has been edited successfully!");
                                         }
                                         // Edit deadline of global task
@@ -231,7 +238,8 @@ public class Main {
                                             uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
                                             System.out.println("): ");
                                             LocalDateTime newDeadline = inputHandler.readDateTime(TaskScale.GLOBAL);
-                                            taskService.editDeadline(listOfGlobalTasks, j, newDeadline);
+                                            Task exactTask = listOfGlobalTasks.get(j);
+                                            taskService.editDeadline(exactTask, newDeadline);
                                             uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
                                             System.out.println();
                                             uiSystem.delay();
@@ -619,7 +627,14 @@ public class Main {
                             if (searchAction == 1) {
                                 System.out.println("Write first letter of the Task or full name of the Task: ");
                                 String searchName = inputHandler.readString();
-                                Task exactTask = taskService.search(listOfEverydayTasks, searchName);
+                                Task exactTask;
+                                // Searching for exact everyday Task
+                                if (searchName.length() == 1) {
+                                    exactTask = taskService.searchByFirstLetter(listOfEverydayTasks, searchName);
+                                } else {
+                                    exactTask = taskService.searchByFullName(listOfEverydayTasks, searchName);
+                                }
+                                // If everyday task is found or not found
                                 if (exactTask != null) {
                                     uiSystem.displaySpecificTask(exactTask, TaskScale.EVERYDAY);
                                     System.out.println();
@@ -632,7 +647,14 @@ public class Main {
                             else if (searchAction == 2) {
                                 System.out.println("Write first letter of the Task or full name of the Task: ");
                                 String searchName = inputHandler.readString();
-                                Task exactTask = taskService.search(listOfGlobalTasks, searchName);
+                                Task exactTask;
+                                // Searching for exact global Task
+                                if (searchName.length() == 1) {
+                                    exactTask = taskService.searchByFirstLetter(listOfGlobalTasks, searchName);
+                                } else {
+                                    exactTask = taskService.searchByFullName(listOfGlobalTasks, searchName);
+                                }
+                                // If global task is found or not found
                                 if (exactTask != null) {
                                     uiSystem.displaySpecificTask(exactTask, TaskScale.GLOBAL);
                                     System.out.println();

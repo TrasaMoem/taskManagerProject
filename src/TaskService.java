@@ -6,12 +6,10 @@ public class TaskService {
     public List<Task> sortByName(List<Task> list, SortParameters sortFromAtoZorZtoA) {
         List<Task> sortingList = new ArrayList<>(list);
         // Sort from A to Z
-        if (sortFromAtoZorZtoA == SortParameters.fromAtoZ) {
-            sortingList.sort(Comparator.comparing(Task::getName));
-        }
-        // Sort from Z to A
-        else {
-            sortingList.sort(Comparator.comparing(Task::getName).reversed());
+        sortingList.sort(Comparator.comparing(Task::getName));
+        if (sortFromAtoZorZtoA != SortParameters.fromAtoZ) {
+            // Sort from Z to A
+            Collections.reverse(sortingList);
         }
         return sortingList;
     }
@@ -39,55 +37,51 @@ public class TaskService {
 
             break;
         }
-        if (sortFromSmallestToLargestOrLargestToSmallest == SortParameters.fromSmallestToLargest) {
-            return sortingList;
-        } else {
-            return sortingList.reversed();
-        }
-    }
-
-    public List<Task> sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
-        List<Task> sortingList = new ArrayList<>(list);
-        if (sortFromSmallestToLargestOrLargestToSmallest == SortParameters.fromSmallestToLargest) {
-            // sort from Smallest to Largest deadline
-            sortingList.sort(Comparator.comparing(Task::getDeadline));
-        } else {
-            // sort from Largest to smallest deadline
-            sortingList.sort(Comparator.comparing(Task::getDeadline).reversed());
+        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromSmallestToLargest) {
+            Collections.reverse(sortingList);
         }
         return sortingList;
     }
 
-    public void editName(List<Task> list, int specificTaskNumber, String newName) {
-        list.get(specificTaskNumber).setName(newName);
-    }
-    public void editDescription(List<Task> list, int specificTaskNumber, String newDescription) {
-        list.get(specificTaskNumber).setDescription(newDescription);
-    }
-    public void editPriority(List<Task> list, int specificTaskNumber, int newPriority) {
-        list.get(specificTaskNumber).setPriority(newPriority);
-    }
-    public void editDeadline(List<Task> list, int specificTaskNumber, LocalDateTime newDeadline) {
-        list.get(specificTaskNumber).setDeadline(newDeadline);
+    public List<Task> sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
+        List<Task> sortingList = new ArrayList<>(list);
+        // sort from Smallest to Largest deadline
+        sortingList.sort(Comparator.comparing(Task::getDeadline));
+        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromSmallestToLargest) {
+            // sort from Largest to smallest deadline
+            Collections.reverse(sortingList);
+        }
+        return sortingList;
     }
 
-    public Task search(List<Task> list, String name) {
-        // Search by first letter
-        if (name.length() == 1) {
-            for (Task task : list) {
-                char letter = task.getName().charAt(0);
-                if (String.valueOf(letter).equalsIgnoreCase(name)) {
-                    return task;
-                }
+    public void editName(Task exactTask, String newName) {
+        exactTask.setName(newName);
+    }
+    public void editDescription(Task exactTask, String newDescription) {
+        exactTask.setDescription(newDescription);
+    }
+    public void editPriority(Task exactTask, int newPriority) {
+        exactTask.setPriority(newPriority);
+    }
+    public void editDeadline(Task exactTask, LocalDateTime newDeadline) {
+        exactTask.setDeadline(newDeadline);
+    }
+    // Searching by first letter of the word
+    public Task searchByFirstLetter(List<Task> list, String name) {
+        for (Task task : list) {
+            char letter = task.getName().charAt(0);
+            if (String.valueOf(letter).equalsIgnoreCase(name)) {
+                return task;
             }
-        } else {
-            for (Task task : list) {
-                if (task.getName().equals(name)) {
-                    return task;
-                }
+        } return null;
+    }
+    // Searching by full name of the word
+    public Task searchByFullName(List<Task> list, String name) {
+        for (Task task : list) {
+            if (task.getName().equals(name)) {
+                return task;
             }
-        }
-        return null;
+        } return null;
     }
 
     public void addToOverdueTaskHours(Task correctTask, int hoursToAdd) {
@@ -101,10 +95,10 @@ public class TaskService {
     public LinkedHashMap<Integer,Integer> positionsOfOverdueTasks(List<Task> list) {
         int overdueCounter = 0;
         LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
-        for (Task task : list) {
+        for (int i = 0; i < list.size(); i++) {
             LocalDateTime now = LocalDateTime.now();
-            if (task.getDeadline().isBefore(now)) {
-                overdueTasksHash.put(overdueCounter, list.indexOf(task));
+            if (list.get(i).getDeadline().isBefore(now)) {
+                overdueTasksHash.put(overdueCounter, i);
                 overdueCounter++;
             }
         }
