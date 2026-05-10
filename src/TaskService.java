@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class TaskService {
     public enum SortByName {
@@ -27,7 +28,7 @@ public class TaskService {
             .setPrettyPrinting()
             .create();
 
-    public void saveEverydayTasks(ArrayList<Task> tasks, String fileName) {
+    public void saveEverydayTasks(List<Task> tasks, String fileName) {
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(tasks, writer);
         } catch (Exception e) {
@@ -35,7 +36,7 @@ public class TaskService {
         }
     }
 
-    public void saveGlobalTasks(ArrayList<Task> tasks, String fileName) {
+    public void saveGlobalTasks(List<Task> tasks, String fileName) {
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(tasks, writer);
         } catch (Exception e) {
@@ -52,7 +53,7 @@ public class TaskService {
         }
     }
 
-    public void sortByName(ArrayList<Task> list, SortByName sortFromAtoZorZtoA) {
+    public void sortByName(List<Task> list, SortByName sortFromAtoZorZtoA) {
         // Sort from A to Z
         if (sortFromAtoZorZtoA == SortByName.fromAtoZ) {
             list.sort(Comparator.comparing(Task::getName));
@@ -66,7 +67,7 @@ public class TaskService {
 
     }
 
-    public void sortByPriority(ArrayList<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
+    public void sortByPriority(List<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
         // Sort by priority from smallest to largest
         if (sortFromSmallestToLargestOrLargestToSmallest == SortByScale.fromSmallestToLargest) {
             while (true) {
@@ -121,7 +122,7 @@ public class TaskService {
         }
     }
 
-    public void sortByDeadline(ArrayList<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
+    public void sortByDeadline(List<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
         if (sortFromSmallestToLargestOrLargestToSmallest == SortByScale.fromSmallestToLargest) {
             // sort from Smallest to Largest deadline
             list.sort(Comparator.comparing(Task::getDeadline));
@@ -133,7 +134,7 @@ public class TaskService {
         }
     }
 
-    public void edit(ArrayList<Task> list, TaskParameter taskParameter, int specificTaskNumber, TaskScale scale) {
+    public void edit(List<Task> list, TaskParameter taskParameter, int specificTaskNumber, TaskScale scale) {
         // Edit name of the task
         if (taskParameter == TaskParameter.NAME) {
             System.out.println("Enter new name of the Task (old: " + list.get(specificTaskNumber).getName() + "): ");
@@ -180,7 +181,7 @@ public class TaskService {
         }
     }
 
-    public void search(ArrayList<Task> list, String name, TaskScale scale) {
+    public void search(List<Task> list, String name, TaskScale scale) {
         while (true) {
             // Search by first letter
             UISystem uiSystem = new UISystem();
@@ -209,7 +210,7 @@ public class TaskService {
         }
     }
 
-    public void addToOverdueTaskTime(ArrayList<Task> list, TaskScale scale) {
+    public void addToOverdueTaskTime(List<Task> list, TaskScale scale) {
         LinkedHashMap<Integer,Integer> trueIndexOfTasks = positionsOfOverdueTasks(list);
         int actionsQuantity = trueIndexOfTasks.size();
         int overdueTaskAddTimeAction = inputHandler.readNumber(actionsQuantity + 1);
@@ -231,7 +232,7 @@ public class TaskService {
         }
     }
 
-    public LinkedHashMap<Integer,Integer> positionsOfOverdueTasks(ArrayList<Task> list) {
+    public LinkedHashMap<Integer,Integer> positionsOfOverdueTasks(List<Task> list) {
         int overdueCounter = 0;
         LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
         for (Task task : list) {
@@ -243,7 +244,7 @@ public class TaskService {
         return overdueTasksHash;
     }
 
-    public void deleteOverdueTask(ArrayList<Task> list) {
+    public void deleteOverdueTask(List<Task> list) {
         LinkedHashMap<Integer,Integer> trueIndexOfTask = positionsOfOverdueTasks(list);
         int actionsQuantity = trueIndexOfTask.size();
         int overdueEverydayTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);

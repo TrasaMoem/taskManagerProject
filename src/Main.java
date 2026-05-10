@@ -8,8 +8,8 @@ public class Main {
         InputHandler inputHandler = new InputHandler();
         TaskService taskService = new TaskService();
         UISystem uiSystem = new UISystem();
-        ArrayList<Task> listOfEverydayTasks = taskService.loadTasks(EVERYDAY_FILE_NAME);
-        ArrayList<Task> listOfGlobalTasks = taskService.loadTasks(GLOBAL_FILE_NAME);
+        List<Task> listOfEverydayTasks = taskService.loadTasks(EVERYDAY_FILE_NAME);
+        List<Task> listOfGlobalTasks = taskService.loadTasks(GLOBAL_FILE_NAME);
         // If one of lists is equals null
         if (listOfEverydayTasks == null) {
             listOfEverydayTasks = new ArrayList<>();
@@ -341,13 +341,11 @@ public class Main {
                     // Display everyday tasks
                     if (displayAction == 1) {
                         uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
-                        System.out.println();
                         uiSystem.delay();
                     }
                     // Display global tasks
                     else if (displayAction == 2) {
                         uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
-                        System.out.println();
                         uiSystem.delay();
                     }
                     // Exit display action at all

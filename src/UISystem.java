@@ -1,7 +1,7 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 
 public class UISystem {
     private final LocalDateTime now = LocalDateTime.now();
@@ -45,7 +45,7 @@ public class UISystem {
         displaySpecificTaskDeadline(task, scale);
     }
 
-    public void displayOverdueTasks(ArrayList<Task> list, TaskScale scale) {
+    public void displayOverdueTasks(List<Task> list, TaskScale scale) {
         int overdueCounter = 0;
         for (Task task : list) {
             if (task.getDeadline().isBefore(now)) {
@@ -58,7 +58,7 @@ public class UISystem {
             System.out.println("No overdue tasks");
         }
     }
-    public void display(ArrayList<Task> list, TaskScale scale) {
+    public void display(List<Task> list, TaskScale scale) {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
@@ -68,11 +68,12 @@ public class UISystem {
                 System.out.print((i + 1) + ") Name: " + t.getName() + ", Description: " + t.getDescription() + ", Priority: " + t.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
 
                 displaySpecificTaskDeadline(t, scale);
+                System.out.println();
             }
         }
     }
 
-    public void statistics(ArrayList<Task> list, String everydayOrGlobalOrGeneral) {
+    public void statistics(List<Task> list, String everydayOrGlobalOrGeneral) {
         int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, moreThanHighPriorityCounter = 0, counterOfActiveTasks = 0;
         Task nearest = null, farthest = null;
         long totalMinutes = 0;
