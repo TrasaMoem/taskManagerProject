@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class UISystem {
-    private final LocalDateTime now = LocalDateTime.now();
     private final InputHandler inputHandler = new InputHandler();
 
     public void delay() {
@@ -18,6 +17,7 @@ public class UISystem {
         }
     }
     public void displaySpecificTaskDeadline(Task task, TaskScale scale) {
+        LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now, task.getDeadline());
         boolean passed = duration.isNegative();
         duration = duration.abs();
@@ -48,6 +48,7 @@ public class UISystem {
     public void displayOverdueTasks(List<Task> list, TaskScale scale) {
         int overdueCounter = 0;
         for (Task task : list) {
+            LocalDateTime now = LocalDateTime.now();
             if (task.getDeadline().isBefore(now)) {
                 overdueCounter++;
                 System.out.print(overdueCounter + ") " + task.getName());
@@ -73,13 +74,14 @@ public class UISystem {
         }
     }
 
-    public void statistics(List<Task> list, String everydayOrGlobalOrGeneral) {
+    public void statistics(List<Task> list, TaskScale scale) {
         int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, moreThanHighPriorityCounter = 0, counterOfActiveTasks = 0;
         Task nearest = null, farthest = null;
         long totalMinutes = 0;
 
         // counter block
         for (Task t : list) {
+            LocalDateTime now = LocalDateTime.now();
             // Nearest deadline
             if (t.getDeadline().isAfter(now)) {
                 if (nearest == null || t.getDeadline().isBefore(nearest.getDeadline())) {
@@ -112,7 +114,7 @@ public class UISystem {
             }
         }
         System.out.println("Statistic: ");
-        System.out.println("Total number of " + everydayOrGlobalOrGeneral + " tasks: " + list.size());
+        System.out.println("Total number of " + scale + " tasks: " + list.size());
         System.out.println("---");
         System.out.println("Overdue tasks: " + overdueCounter);
         System.out.println("Active tasks: " + (list.size() - overdueCounter));
@@ -141,7 +143,7 @@ public class UISystem {
         if (counterOfActiveTasks == 0) {
             System.out.println("Average time to deadline: no active tasks");
         } else {
-            if (everydayOrGlobalOrGeneral.equalsIgnoreCase("everyday")) {
+            if (scale == TaskScale.EVERYDAY) {
                 long averageMinutes = totalMinutes / counterOfActiveTasks, totalAverageHours = averageMinutes / 60, totalAverageMinutes = totalMinutes % 60;
                 System.out.println("Average time to deadline: " + totalAverageHours + " hours, " + totalAverageMinutes + " minutes");
             } else {

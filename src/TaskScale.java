@@ -1,3 +1,3 @@
 public enum TaskScale {
-    EVERYDAY, GLOBAL;
+    EVERYDAY, GLOBAL, GENERAL
 }

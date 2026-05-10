@@ -1,9 +1,3 @@
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,51 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TaskService {
-    public enum SortByName {
-        fromAtoZ, fromZtoA
-    }
-    public enum SortByScale {
-        fromSmallestToLargest, fromLargestToSmallest
-    }
-    public enum TaskParameter {
-        NAME, DESCRIPTION, PRIORITY, DEADLINE
-    }
+
     private final InputHandler inputHandler = new InputHandler();
-    private final LocalDateTime now = LocalDateTime.now();
 
-    private final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .setPrettyPrinting()
-            .create();
-
-    public void saveEverydayTasks(List<Task> tasks, String fileName) {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            gson.toJson(tasks, writer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void saveGlobalTasks(List<Task> tasks, String fileName) {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            gson.toJson(tasks, writer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public ArrayList<Task> loadTasks(String fileName) {
-        try (FileReader reader = new FileReader(fileName)) {
-            Type taskListType = new TypeToken<ArrayList<Task>>(){}.getType();
-            return gson.fromJson(reader, taskListType);
-        } catch (Exception e) {
-            System.out.println("Cant load lists data from file");
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void sortByName(List<Task> list, SortByName sortFromAtoZorZtoA) {
+    public void sortByName(List<Task> list, SortParameters sortFromAtoZorZtoA) {
         // Sort from A to Z
-        if (sortFromAtoZorZtoA == SortByName.fromAtoZ) {
+        if (sortFromAtoZorZtoA == SortParameters.fromAtoZ) {
             list.sort(Comparator.comparing(Task::getName));
             System.out.println("Successfully sorted everyday Tasks from A to Z!");
         }
@@ -64,66 +19,40 @@ public class TaskService {
             list.sort(Comparator.comparing(Task::getName).reversed());
             System.out.println("Successfully sorted everyday Tasks from Z to A!");
         }
-
     }
 
-    public void sortByPriority(List<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
-        // Sort by priority from smallest to largest
-        if (sortFromSmallestToLargestOrLargestToSmallest == SortByScale.fromSmallestToLargest) {
-            while (true) {
-                boolean flag = false;
-                for (int i = 1; i < list.size(); i++) {
-                    if (list.get(i).getPriority() < list.get(i - 1).getPriority()) {
-                        Task temp;
-                        temp = list.get(i);
-                        list.set(i, list.get(i - 1));
-                        list.set(i - 1, temp);
-                    }
+    public List<Task> sortByPriority(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
+        List<Task> sortingList = new ArrayList<>(list);
+        // Sort by priority
+        while (true) {
+            boolean flag = false;
+            for (int i = 1; i < sortingList.size(); i++) {
+                if (sortingList.get(i).getPriority() < sortingList.get(i - 1).getPriority()) {
+                    Task temp;
+                    temp = sortingList.get(i);
+                    sortingList.set(i, sortingList.get(i - 1));
+                    sortingList.set(i - 1, temp);
                 }
-                for (int j = 1; j < list.size(); j++) {
-                    if (list.get(j).getPriority() < list.get(j - 1).getPriority()) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    System.out.println("Successfully completed sort of everyday Tasks by priority from Smallest to Largest");
-                } else {
-                    continue;
-                }
-                break;
             }
+            for (int j = 1; j < sortingList.size(); j++) {
+                if (sortingList.get(j).getPriority() < sortingList.get(j - 1).getPriority()) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) continue;
+
+            break;
         }
-        // Sort by priority from largest to smallest
-        else {
-            while (true) {
-                boolean flag = false;
-                for (int i = 1; i < list.size(); i++) {
-                    if (list.get(i).getPriority() > list.get(i - 1).getPriority()) {
-                        Task temp;
-                        temp = list.get(i - 1);
-                        list.set(i - 1, list.get(i));
-                        list.set(i, temp);
-                    }
-                }
-                for (int j = 1; j < list.size(); j++) {
-                    if (list.get(j).getPriority() > list.get(j - 1).getPriority()) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    System.out.println("Successfully completed sort of everyday Tasks by priority from Largest to Smallest");
-                } else {
-                    continue;
-                }
-                break;
-            }
+        if (sortFromSmallestToLargestOrLargestToSmallest == SortParameters.fromSmallestToLargest) {
+            return sortingList;
+        } else {
+            return sortingList.reversed();
         }
     }
 
-    public void sortByDeadline(List<Task> list, SortByScale sortFromSmallestToLargestOrLargestToSmallest) {
-        if (sortFromSmallestToLargestOrLargestToSmallest == SortByScale.fromSmallestToLargest) {
+    public void sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
+        if (sortFromSmallestToLargestOrLargestToSmallest == SortParameters.fromSmallestToLargest) {
             // sort from Smallest to Largest deadline
             list.sort(Comparator.comparing(Task::getDeadline));
             System.out.println("Successfully completed sort of everyday Tasks by deadline from Smallest to Largest");
@@ -134,52 +63,47 @@ public class TaskService {
         }
     }
 
-    public void edit(List<Task> list, TaskParameter taskParameter, int specificTaskNumber, TaskScale scale) {
-        // Edit name of the task
-        if (taskParameter == TaskParameter.NAME) {
-            System.out.println("Enter new name of the Task (old: " + list.get(specificTaskNumber).getName() + "): ");
-            list.get(specificTaskNumber).setName(inputHandler.readString());
-            System.out.println("New name " + list.get(specificTaskNumber).getName() + " has been edited successfully!");
+    public void editName(List<Task> list, int specificTaskNumber) {
+        System.out.println("Enter new name of the Task (old: " + list.get(specificTaskNumber).getName() + "): ");
+        list.get(specificTaskNumber).setName(inputHandler.readString());
+        System.out.println("New name " + list.get(specificTaskNumber).getName() + " has been edited successfully!");
+    }
+    public void editDescription(List<Task> list, int specificTaskNumber) {
+        System.out.println("Enter new description of the Task (old: " + list.get(specificTaskNumber).getDescription() + "): ");
+        list.get(specificTaskNumber).setDescription(inputHandler.readString());
+        System.out.println("New description " + list.get(specificTaskNumber).getDescription() + " has been edited successfully!");
+    }
+    public void editPriority(List<Task> list, int specificTaskNumber) {
+        System.out.println("Enter new priority of the Task (old: " + list.get(specificTaskNumber).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
+        list.get(specificTaskNumber).setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
+        System.out.println("New priority " + list.get(specificTaskNumber).getPriority() + " has been edited successfully!");
+    }
+    public void editDeadline(List<Task> list, int specificTaskNumber, TaskScale scale) {
+        UISystem uiSystem = new UISystem();
+        // Edit Everyday deadline
+        if (scale == TaskScale.EVERYDAY) {
+            System.out.print("Enter new deadline of the Task (in hours) until the end of the Task (old: ");
+            uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
+            System.out.println("): ");
+
+            // Set new deadline in hours
+            list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
+
+            uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
         }
-        // Edit description of the task
-        else if (taskParameter == TaskParameter.DESCRIPTION) {
-            System.out.println("Enter new description of the Task (old: " + list.get(specificTaskNumber).getDescription() + "): ");
-            list.get(specificTaskNumber).setDescription(inputHandler.readString());
-            System.out.println("New description " + list.get(specificTaskNumber).getDescription() + " has been edited successfully!");
-        }
-        // Edit priority of the task
-        else if (taskParameter == TaskParameter.PRIORITY) {
-            System.out.println("Enter new priority of the Task (old: " + list.get(specificTaskNumber).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
-            list.get(specificTaskNumber).setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
-            System.out.println("New priority " + list.get(specificTaskNumber).getPriority() + " has been edited successfully!");
-        }
-        // Edit deadline of the task
-        else if (taskParameter == TaskParameter.DEADLINE) {
-            UISystem uiSystem = new UISystem();
-            // Edit Everyday deadline
-            if (scale == TaskScale.EVERYDAY) {
-                System.out.print("Enter new deadline of the Task (in hours) until the end of the Task (old: ");
-                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
-                System.out.println("): ");
+        // Edit global deadline
+        else {
+            System.out.print("Enter new deadline of the Task (in days) until the end of the Task (old: ");
+            uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
+            System.out.println("): ");
 
-                // Set new deadline in hours
-                list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
+            // Set new deadline in days
+            list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
 
-                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
-            }
-            // Edit global deadline
-            else {
-                System.out.print("Enter new deadline of the Task (in days) until the end of the Task (old: ");
-                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
-                System.out.println("): ");
-
-                // Set new deadline in days
-                list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
-
-                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
-            }
+            uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
         }
     }
+
 
     public void search(List<Task> list, String name, TaskScale scale) {
         while (true) {
@@ -236,6 +160,7 @@ public class TaskService {
         int overdueCounter = 0;
         LinkedHashMap<Integer, Integer> overdueTasksHash = new LinkedHashMap<>();
         for (Task task : list) {
+            LocalDateTime now = LocalDateTime.now();
             if (task.getDeadline().isBefore(now)) {
                 overdueTasksHash.put(overdueCounter, list.indexOf(task));
                 overdueCounter++;
