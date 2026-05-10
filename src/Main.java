@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main {
@@ -130,19 +131,33 @@ public class Main {
 
                                         // Edit name of everyday task
                                         if (editSpecificParameter == 1) {
-                                            taskService.editName(listOfEverydayTasks, j);
+                                            System.out.println("Enter new name of the Task (old: " + listOfEverydayTasks.get(j).getName() + "): ");
+                                            String newName = inputHandler.readString();
+                                            taskService.editName(listOfEverydayTasks, j, newName);
+                                            System.out.println("New name " + listOfEverydayTasks.get(j).getName() + " has been edited successfully!");
                                         }
                                         // Edit description of everyday task
                                         else if (editSpecificParameter == 2) {
-                                            taskService.editDescription(listOfEverydayTasks, j);
+                                            System.out.println("Enter new description of the Task (old: " + listOfEverydayTasks.get(j).getDescription() + "): ");
+                                            String newDescription = inputHandler.readString();
+                                            taskService.editDescription(listOfEverydayTasks, j, newDescription);
+                                            System.out.println("New description " + listOfEverydayTasks.get(j).getDescription() + " has been edited successfully!");
                                         }
                                         // Edit priority of everyday task
                                         else if (editSpecificParameter == 3) {
-                                            taskService.editPriority(listOfEverydayTasks, j);
+                                            System.out.println("Enter new priority of the Task (old: " + listOfEverydayTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
+                                            int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            taskService.editPriority(listOfEverydayTasks, j, newPriority);
+                                            System.out.println("New priority " + listOfEverydayTasks.get(j).getPriority() + " has been edited successfully!");
                                         }
                                         // Edit deadline of everyday task
                                         else if (editSpecificParameter == 4) {
-                                            taskService.editDeadline(listOfEverydayTasks, j, TaskScale.EVERYDAY);
+                                            System.out.print("Enter new deadline of the Task (in hours) until the end of the Task (old: ");
+                                            uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
+                                            System.out.println("): ");
+                                            LocalDateTime newDataTime = inputHandler.readDateTime(TaskScale.EVERYDAY);
+                                            taskService.editDeadline(listOfEverydayTasks, j, newDataTime);
+                                            uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
                                         }
@@ -191,19 +206,33 @@ public class Main {
 
                                         // Edit name of the global task
                                         if (editSpecificParameter == 1) {
-                                            taskService.editName(listOfGlobalTasks, j);
+                                            System.out.println("Enter new name of the Task (old: " + listOfGlobalTasks.get(j).getName() + "): ");
+                                            String newName = inputHandler.readString();
+                                            taskService.editName(listOfGlobalTasks, j, newName);
+                                            System.out.println("New name " + listOfGlobalTasks.get(j).getName() + " has been edited successfully!");
                                         }
                                         // Edit description of global task
                                         else if (editSpecificParameter == 2) {
-                                            taskService.editDescription(listOfGlobalTasks, j);
+                                            System.out.println("Enter new description of the Task (old: " + listOfGlobalTasks.get(j).getDescription() + "): ");
+                                            String newDescription = inputHandler.readString();
+                                            taskService.editDescription(listOfGlobalTasks, j, newDescription);
+                                            System.out.println("New description " + listOfGlobalTasks.get(j).getDescription() + " has been edited successfully!");
                                         }
                                         // Edit priority of global task
                                         else if (editSpecificParameter == 3) {
-                                            taskService.editPriority(listOfGlobalTasks, j);
+                                            System.out.println("Enter new priority of the Task (old: " + listOfGlobalTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
+                                            int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            taskService.editPriority(listOfGlobalTasks, j, newPriority);
+                                            System.out.println("New priority " + listOfGlobalTasks.get(j).getPriority() + " has been edited successfully!");
                                         }
                                         // Edit deadline of global task
                                         else if (editSpecificParameter == 4) {
-                                            taskService.editDeadline(listOfGlobalTasks, j, TaskScale.GLOBAL);
+                                            System.out.print("Enter new deadline of the Task (in days) until the end of the Task (old: ");
+                                            uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
+                                            System.out.println("): ");
+                                            LocalDateTime newDeadline = inputHandler.readDateTime(TaskScale.GLOBAL);
+                                            taskService.editDeadline(listOfGlobalTasks, j, newDeadline);
+                                            uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
                                             System.out.println();
                                             uiSystem.delay();
                                         }
@@ -398,6 +427,7 @@ public class Main {
                                         // First letter sort from A to Z
                                         if (sortEverydayTaskByNames == 1) {
                                             taskService.sortByName(listOfEverydayTasks, SortParameters.fromAtoZ);
+                                            System.out.println("Successfully sorted Everyday Tasks from A to Z!");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
@@ -405,6 +435,7 @@ public class Main {
                                         // First letter sort from Z to A
                                         else if (sortEverydayTaskByNames == 2) {
                                             taskService.sortByName(listOfEverydayTasks, SortParameters.fromZtoA);
+                                            System.out.println("Successfully sorted Everyday Tasks from Z to A!");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
@@ -448,6 +479,7 @@ public class Main {
                                         // Sort deadline from smallest to largest
                                         if (sortEverydayTaskSmallestOrLargestAction == 1) {
                                             taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromSmallestToLargest);
+                                            System.out.println("Successfully completed sort of Everyday Tasks by deadline from Smallest to Largest");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
@@ -455,6 +487,7 @@ public class Main {
                                         // Sort deadline from largest to smallest
                                         else if (sortEverydayTaskSmallestOrLargestAction == 2) {
                                             taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromLargestToSmallest);
+                                            System.out.println("Successfully completed sort of Everyday Tasks by deadline from Largest to Smallest");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
                                             uiSystem.delay();
@@ -489,6 +522,7 @@ public class Main {
                                             // Sort global tasks from A to Z
                                             if (sortGlobalTaskByNames == 1) {
                                                 taskService.sortByName(listOfGlobalTasks, SortParameters.fromAtoZ);
+                                                System.out.println("Successfully sorted Global Tasks from A to Z!");
                                                 uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                                 System.out.println();
                                                 uiSystem.delay();
@@ -496,6 +530,7 @@ public class Main {
                                             // Sort global tasks from Z to A
                                             else if (sortGlobalTaskByNames == 2) {
                                                 taskService.sortByName(listOfGlobalTasks, SortParameters.fromZtoA);
+                                                System.out.println("Successfully sorted Global Tasks from Z to A!");
                                                 uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                                 System.out.println();
                                                 uiSystem.delay();
@@ -544,6 +579,7 @@ public class Main {
                                         // Sort global tasks by deadline from smallest to largest
                                         if (sortGlobalTaskSmallestOrLargestAction == 1) {
                                             taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromSmallestToLargest);
+                                            System.out.println("Successfully completed sort of Global Tasks by deadline from Smallest to Largest");
                                             uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                             System.out.println();
                                             uiSystem.delay();
@@ -551,6 +587,7 @@ public class Main {
                                         // Sort global tasks by deadline from largest to smallest
                                         else if (sortGlobalTaskSmallestOrLargestAction == 2) {
                                             taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromLargestToSmallest);
+                                            System.out.println("Successfully completed sort of Global Tasks by deadline from Largest to Smallest");
                                             uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                             System.out.println();
                                             uiSystem.delay();
@@ -582,17 +619,27 @@ public class Main {
                             if (searchAction == 1) {
                                 System.out.println("Write first letter of the Task or full name of the Task: ");
                                 String searchName = inputHandler.readString();
-                                taskService.search(listOfEverydayTasks, searchName, TaskScale.EVERYDAY);
-                                System.out.println();
-                                uiSystem.delay();
+                                Task exactTask = taskService.search(listOfEverydayTasks, searchName);
+                                if (exactTask != null) {
+                                    uiSystem.displaySpecificTask(exactTask, TaskScale.EVERYDAY);
+                                    System.out.println();
+                                    uiSystem.delay();
+                                } else {
+                                    System.out.println("No such Task, please try another word or letter");
+                                }
                             }
                             // Search global tasks
                             else if (searchAction == 2) {
                                 System.out.println("Write first letter of the Task or full name of the Task: ");
                                 String searchName = inputHandler.readString();
-                                taskService.search(listOfGlobalTasks, searchName, TaskScale.GLOBAL);
-                                System.out.println();
-                                uiSystem.delay();
+                                Task exactTask = taskService.search(listOfGlobalTasks, searchName);
+                                if (exactTask != null) {
+                                    uiSystem.displaySpecificTask(exactTask, TaskScale.GLOBAL);
+                                    System.out.println();
+                                    uiSystem.delay();
+                                } else {
+                                    System.out.println("No such Task, please try another word or letter");
+                                }
                             }
                             // Exit search action
                             else if (searchAction == 3) {
@@ -673,7 +720,14 @@ public class Main {
                                         LinkedHashMap<Integer,Integer> trueIndexOfTasks = taskService.positionsOfOverdueTasks(listOfEverydayTasks);
                                         int actionsQuantity = trueIndexOfTasks.size();
                                         System.out.println((actionsQuantity+1) + ") Back to previous page");
-                                        taskService.addToOverdueTaskTime(listOfEverydayTasks, TaskScale.EVERYDAY);
+                                        int overdueTaskAddTimeAction = inputHandler.readNumber(actionsQuantity + 1);
+                                        if (!(overdueTaskAddTimeAction == (actionsQuantity+1))) {
+                                            System.out.println("How much hours would you like to add?");
+                                            int hoursToAdd = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            Task correctTask = listOfEverydayTasks.get(trueIndexOfTasks.get(overdueTaskAddTimeAction-1));
+                                            taskService.addToOverdueTaskHours(correctTask, hoursToAdd);
+                                            System.out.println("Successfully added more time to overdue everyday task");
+                                        }
                                     }
                                     // Add time to global overdue tasks
                                     else if (overdueTimeAddAction == 2) {
@@ -683,7 +737,14 @@ public class Main {
                                         LinkedHashMap<Integer,Integer> trueIndexOfTasks = taskService.positionsOfOverdueTasks(listOfGlobalTasks);
                                         int actionsQuantity = trueIndexOfTasks.size();
                                         System.out.println((actionsQuantity+1) + ") Back to previous page");
-                                        taskService.addToOverdueTaskTime(listOfGlobalTasks, TaskScale.GLOBAL);
+                                        int overdueTaskAddTimeAction = inputHandler.readNumber(actionsQuantity + 1);
+                                        if (!(overdueTaskAddTimeAction == (actionsQuantity+1))) {
+                                            System.out.println("How much days would you like to add?");
+                                            int daysToAdd = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            Task correctTask = listOfGlobalTasks.get(trueIndexOfTasks.get(overdueTaskAddTimeAction-1));
+                                            taskService.addToOverdueTaskDays(correctTask, daysToAdd);
+                                            System.out.println("Successfully added more time to overdue Global task");
+                                        }
                                     }
                                     // Exit time adding
                                     else if (overdueTimeAddAction == 3) {
@@ -708,9 +769,22 @@ public class Main {
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfEverydayTasks);
                                         int actionsQuantity = trueIndexOfTask.size();
-                                        System.out.println((actionsQuantity+1) + ") Delete all the overdue Tasks");
+                                        System.out.println((actionsQuantity+1) + ") Delete all Everyday overdue Tasks");
                                         System.out.println((actionsQuantity+2) + ") Back to previous page");
-                                        taskService.deleteOverdueTask(listOfEverydayTasks);
+                                        int overdueEverydayTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);
+                                        if (overdueEverydayTaskDeleteAction == actionsQuantity+1) {
+                                            boolean sure = uiSystem.sure();
+                                            if (sure) {
+                                                taskService.deleteAllOverdueTasks(listOfEverydayTasks, actionsQuantity, trueIndexOfTask);
+                                            } else {
+                                                System.out.println("No changes were made");
+                                            }
+                                        } else if (overdueEverydayTaskDeleteAction != actionsQuantity+2) {
+                                            int index = trueIndexOfTask.get(overdueEverydayTaskDeleteAction-1);
+                                            String rememberName = listOfEverydayTasks.get(index).getName();
+                                            taskService.deleteSpecificOverdueTask(listOfEverydayTasks, index);
+                                            System.out.println("Successfully deleted overdue Task " + rememberName + "!");
+                                        }
                                     }
                                     // Delete global overdue tasks
                                     else if (deleteOverdueAction == 2) {
@@ -719,9 +793,22 @@ public class Main {
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfGlobalTasks);
                                         int actionsQuantity = trueIndexOfTask.size();
-                                        System.out.println((actionsQuantity+1) + ") Delete all the overdue Tasks");
+                                        System.out.println((actionsQuantity+1) + ") Delete all Global overdue Tasks");
                                         System.out.println((actionsQuantity+2) + ") Back to previous page");
-                                        taskService.deleteOverdueTask(listOfGlobalTasks);
+                                        int overdueGlobalTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);
+                                        if (overdueGlobalTaskDeleteAction == actionsQuantity+1) {
+                                            boolean sure = uiSystem.sure();
+                                            if (sure) {
+                                                taskService.deleteAllOverdueTasks(listOfGlobalTasks, actionsQuantity, trueIndexOfTask);
+                                            } else {
+                                                System.out.println("No changes were made");
+                                            }
+                                        } else if (overdueGlobalTaskDeleteAction != actionsQuantity+2) {
+                                            int index = trueIndexOfTask.get(overdueGlobalTaskDeleteAction-1);
+                                            String rememberName = listOfGlobalTasks.get(index).getName();
+                                            taskService.deleteSpecificOverdueTask(listOfGlobalTasks, index);
+                                            System.out.println("Successfully deleted overdue Task " + rememberName + "!");
+                                        }
                                     }
                                     // Exit deleting overdue tasks
                                     else if (deleteOverdueAction == 3) {

@@ -16,6 +16,13 @@ public class UISystem {
             }
         }
     }
+    public boolean sure() {
+        System.out.println("Are you sure you want to do this action?");
+        System.out.println("1. Yes, I sure");
+        System.out.println("2. Dont do this action!");
+        int choice = inputHandler.readNumber(2);
+        return choice == 1;
+    }
     public void displaySpecificTaskDeadline(Task task, TaskScale scale) {
         LocalDateTime now = LocalDateTime.now();
         Duration duration = Duration.between(now, task.getDeadline());
