@@ -2,8 +2,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 public class UISystem {
     private final LocalDateTime now = LocalDateTime.now();
@@ -19,66 +17,58 @@ public class UISystem {
             }
         }
     }
-    private void sure(Scanner sc) {
+    public void displaySpecificTaskDeadline(Task task, TaskScale scale) {
+        Duration duration = Duration.between(now, task.getDeadline());
+        boolean passed = duration.isNegative();
+        duration = duration.abs();
 
+        long days = duration.toDays();
+        long hours = duration.toHours() % 24;
+        long minutes = duration.toMinutes() % 60;
+
+        if (scale == TaskScale.EVERYDAY) {
+            if (passed) {
+                System.out.print("passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
+            } else {
+                System.out.print((days * 24 + hours) + " hours " + minutes + " minutes left");
+            }
+        } else {
+            if (passed) {
+                System.out.print("passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
+            } else {
+                System.out.print(days + " days " + hours + " hours " + minutes + " minutes left");
+            }
+        }
     }
+    public void displaySpecificTask(Task task, TaskScale scale) {
+        System.out.print("Name: " + task.getName() + ", Description: " + task.getDescription() + ", Priority: " + task.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
+        displaySpecificTaskDeadline(task, scale);
+    }
+
     public void displayOverdueTasks(ArrayList<Task> list, TaskScale scale) {
         int overdueCounter = 0;
         for (Task task : list) {
             if (task.getDeadline().isBefore(now)) {
                 overdueCounter++;
                 System.out.print(overdueCounter + ") " + task.getName());
-
-                Duration duration = Duration.between(now, task.getDeadline()).abs();
-                long days = duration.toDays(), hours = duration.toHours() % 24, minutes = duration.toMinutes() % 60;
-
-                if (scale == TaskScale.EVERYDAY) {
-                    System.out.println(" - passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                } else {
-                    System.out.println(" - passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                }
+                displaySpecificTaskDeadline(task, scale);
             }
         }
         if (overdueCounter == 0) {
             System.out.println("No overdue tasks");
         }
     }
-    public void display(ArrayList<Task> list, boolean everydayOrGlobal) {
+    public void display(ArrayList<Task> list, TaskScale scale) {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
             for (int i = 0; i < list.size(); i++) {
-
                 Task t = list.get(i);
 
-                System.out.print((i + 1) + ") Name: " + t.getName() +
-                        ", Description: " + t.getDescription() +
-                        ", Priority: " + t.getPriority() +
-                        " (1 - low, 2 - medium, 3 - high), Deadline time: ");
+                System.out.print((i + 1) + ") Name: " + t.getName() + ", Description: " + t.getDescription() + ", Priority: " + t.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
 
-                Duration duration = Duration.between(now, t.getDeadline());
-                boolean passed = duration.isNegative();
-                duration = duration.abs();
-
-                long days = duration.toDays();
-                long hours = duration.toHours() % 24;
-                long minutes = duration.toMinutes() % 60;
-
-                if (everydayOrGlobal) {
-                    if (passed) {
-                        System.out.println("passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                    } else {
-                        System.out.println((days * 24 + hours) + " hours " + minutes + " minutes left");
-                    }
-                } else {
-                    if (passed) {
-                        System.out.println("passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                    } else {
-                        System.out.println(days + " days " + hours + " hours " + minutes + " minutes left");
-                    }
-                }
+                displaySpecificTaskDeadline(t, scale);
             }
-            delay();
         }
     }
 

@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,13 +11,13 @@ import java.util.LinkedHashMap;
 
 public class TaskService {
     public enum SortByName {
-        fromAtoZ, fromZtoA;
+        fromAtoZ, fromZtoA
     }
     public enum SortByScale {
-        fromSmallestToLargest, fromLargestToSmallest;
+        fromSmallestToLargest, fromLargestToSmallest
     }
     public enum TaskParameter {
-        NAME, DESCRIPTION, PRIORITY, DEADLINE;
+        NAME, DESCRIPTION, PRIORITY, DEADLINE
     }
     private final InputHandler inputHandler = new InputHandler();
     private final LocalDateTime now = LocalDateTime.now();
@@ -166,107 +165,56 @@ public class TaskService {
         }
         // Edit deadline of the task
         else if (taskParameter == TaskParameter.DEADLINE) {
-            Duration duration = Duration.between(now, list.get(specificTaskNumber).getDeadline());
-            boolean passed = duration.isNegative();
-            duration = duration.abs();
-
-            long days = duration.toDays();
-            long hours = duration.toHours() % 24;
-            long minutes = duration.toMinutes() % 60;
-
+            UISystem uiSystem = new UISystem();
             // Edit Everyday deadline
             if (scale == TaskScale.EVERYDAY) {
                 System.out.print("Enter new deadline of the Task (in hours) until the end of the Task (old: ");
-                if (passed) {
-                    System.out.print("passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                } else {
-                    System.out.print((days * 24 + hours) + " hours " + minutes + " minutes left");
-                }
+                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
                 System.out.println("): ");
 
                 // Set new deadline in hours
                 list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
 
-                Duration duration2 = Duration.between(now, list.get(specificTaskNumber).getDeadline());
-                long days2 = duration2.toDays();
-                long hours2 = duration2.toHours() % 24;
-                long minutes2 = duration2.toMinutes() % 60;
-                System.out.println("New deadline: " + (days2 * 24 + hours2) + " hours " + minutes2 + " minutes left has been edited successfully!" );
+                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.EVERYDAY);
             }
             // Edit global deadline
             else {
                 System.out.print("Enter new deadline of the Task (in days) until the end of the Task (old: ");
-                if (passed) {
-                    System.out.print("passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                } else {
-                    System.out.print(days + " days " + hours + " hours " + minutes + " minutes left");
-                }
+                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
                 System.out.println("): ");
 
                 // Set new deadline in days
                 list.get(specificTaskNumber).setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
 
-                Duration duration2 = Duration.between(now, list.get(specificTaskNumber).getDeadline());
-                long days2 = duration2.toDays();
-                long hours2 = duration2.toHours() % 24;
-                long minutes2 = duration2.toMinutes() % 60;
-                System.out.println("New deadline: " + days2 + " days " + hours2 + " hours " + minutes2 + " minutes left has been edited successfully!");
+                uiSystem.displaySpecificTaskDeadline(list.get(specificTaskNumber), TaskScale.GLOBAL);
             }
         }
     }
 
-    public void search(ArrayList<Task> list, String name) {
+    public void search(ArrayList<Task> list, String name, TaskScale scale) {
         while (true) {
             // Search by first letter
+            UISystem uiSystem = new UISystem();
             boolean flag = false;
-            LocalDateTime now = LocalDateTime.now();
             if (name.length() == 1) {
                 for (Task task : list) {
                     char letter = task.getName().charAt(0);
                     if (String.valueOf(letter).equalsIgnoreCase(name)) {
-                        Duration duration = Duration.between(now, task.getDeadline());
-                        boolean passed = duration.isNegative();
-                        duration = duration.abs();
-
-                        long days = duration.toDays();
-                        long hours = duration.toHours() % 24;
-                        long minutes = duration.toMinutes() % 60;
-
-                        System.out.print("Name: " + task.getName() + ", Description: " + task.getDescription() + ", Priority: " + task.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
-                        if (passed) {
-                            System.out.println("passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                        } else {
-                            System.out.println((days * 24 + hours) + " hours " + minutes + " minutes left");
-                        }
+                        uiSystem.displaySpecificTask(task, scale);
                         flag = true;
                     }
-                }
-                if (!flag) {
-                    System.out.println("No such Task, please try another letter");
                 }
             } else {
                 for (Task task : list) {
                     if (task.getName().equals(name)) {
-                        Duration duration = Duration.between(now, task.getDeadline());
-                        boolean passed = duration.isNegative();
-                        duration = duration.abs();
-
-                        long days = duration.toDays();
-                        long hours = duration.toHours() % 24;
-                        long minutes = duration.toMinutes() % 60;
-
-                        System.out.print("Name: " + task.getName() + ", Description: " + task.getDescription() + ", Priority: " + task.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
-                        if (passed) {
-                            System.out.println("passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                        } else {
-                            System.out.println(days + " days " + hours + " hours " + minutes + " minutes left");
-                        }
+                        uiSystem.displaySpecificTask(task, scale);
                         flag = true;
                     }
                 }
-                if (!flag) {
-                    System.out.println("No such Task, please try another word");
-                }
+            }
+            if (!flag) {
+                System.out.println("No such Task, please try another word or letter");
+                continue;
             }
             break;
         }
