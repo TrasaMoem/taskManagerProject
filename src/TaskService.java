@@ -42,18 +42,7 @@ public class TaskService {
             throw new RuntimeException(e);
         }
     }
-
-    public ArrayList<Task> loadEverydayTasks(String fileName) {
-        try (FileReader reader = new FileReader(fileName)) {
-            Type taskListType = new TypeToken<ArrayList<Task>>(){}.getType();
-            return gson.fromJson(reader, taskListType);
-        } catch (Exception e) {
-            System.out.println("Cant load lists data from file");
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ArrayList<Task> loadGlobalTasks(String fileName) {
+    public ArrayList<Task> loadTasks(String fileName) {
         try (FileReader reader = new FileReader(fileName)) {
             Type taskListType = new TypeToken<ArrayList<Task>>(){}.getType();
             return gson.fromJson(reader, taskListType);

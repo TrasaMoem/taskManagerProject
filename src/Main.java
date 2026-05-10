@@ -1,18 +1,15 @@
-import java.time.LocalDateTime;
 import java.util.*;
-import java.time.Duration;
 
 public class Main {
 
     public static void main(String[] args) {
         final String EVERYDAY_FILE_NAME = "everydayTasks.json";
         final String GLOBAL_FILE_NAME = "globalTasks.json";
-        final LocalDateTime now = LocalDateTime.now();
         InputHandler inputHandler = new InputHandler();
         TaskService taskService = new TaskService();
         UISystem uiSystem = new UISystem();
-        ArrayList<Task> listOfEverydayTasks = taskService.loadEverydayTasks(EVERYDAY_FILE_NAME);
-        ArrayList<Task> listOfGlobalTasks = taskService.loadGlobalTasks(GLOBAL_FILE_NAME);
+        ArrayList<Task> listOfEverydayTasks = taskService.loadTasks(EVERYDAY_FILE_NAME);
+        ArrayList<Task> listOfGlobalTasks = taskService.loadTasks(GLOBAL_FILE_NAME);
         // If one of lists is equals null
         if (listOfEverydayTasks == null) {
             listOfEverydayTasks = new ArrayList<>();
@@ -33,6 +30,7 @@ public class Main {
             if (action == 1) {
                 // Adding new task
                 while (true) {
+                    Task task = new Task();
                     System.out.println("Choose which task you want to add: ");
                     System.out.println("1. Everyday Task");
                     System.out.println("2. Global Task");
@@ -40,50 +38,47 @@ public class Main {
                     int addAction = inputHandler.readNumber(3);
                     // Add everyday task
                     if (addAction == 1) {
-                        Task everydaytask = new Task();
-
                         // Everydays task name
                         System.out.println("Enter the name of the Task: ");
-                        everydaytask.setName(inputHandler.readString());
+                        task.setName(inputHandler.readString());
 
                         // Everydays task description
                         System.out.println("Enter the description of the Task: ");
-                        everydaytask.setDescription(inputHandler.readString());
+                        task.setDescription(inputHandler.readString());
 
                         // Everydays task priority
                         System.out.println("Enter the priority of the Task (1 - low, 2 - medium, 3 - high, or more if you want): ");
-                        everydaytask.setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
+                        task.setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
 
                         // Everydays task deadlines
                         System.out.println("Enter the deadline (in hours) until the end: ");
-                        everydaytask.setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
+                        task.setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
 
                         // Add new everyday task to the array
-                        listOfEverydayTasks.add(everydaytask);
+                        listOfEverydayTasks.add(task);
                         System.out.println("Successfully added an everyday task!");
                     }
                     // Add global task
                     else if (addAction == 2) {
-                        Task globaltask = new Task();
 
                         // Global task name
                         System.out.println("Enter the name of the Task: ");
-                        globaltask.setName(inputHandler.readString());
+                        task.setName(inputHandler.readString());
 
                         // Global task description
                         System.out.println("Enter the description of the Task: ");
-                        globaltask.setDescription(inputHandler.readString());
+                        task.setDescription(inputHandler.readString());
 
                         // Global task priority
                         System.out.println("Enter the priority of the Task (1 - low, 2 - medium, 3 - high, or more if you want): ");
-                        globaltask.setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
+                        task.setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
 
                         // Global task deadlines
                         System.out.println("Enter the deadline (in days) until the end of the Task: ");
-                        globaltask.setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
+                        task.setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
 
                         // Add new global task to array
-                        listOfGlobalTasks.add(globaltask);
+                        listOfGlobalTasks.add(task);
                         System.out.println("Successfully added global task!");
                     }
                     // Exit adding sector
@@ -120,21 +115,8 @@ public class Main {
                                     while (true) {
                                         Task t = listOfEverydayTasks.get(j);
 
-                                        System.out.print("The " + (j+1) + " everydays Task: Name: " + t.getName() + ", Description: " + t.getDescription() + ", Priority: " + t.getPriority() + ", Deadline time: ");
-
-                                        Duration duration = Duration.between(now, t.getDeadline());
-                                        boolean passed = duration.isNegative();
-                                        duration = duration.abs();
-
-                                        long days = duration.toDays();
-                                        long hours = duration.toHours() % 24;
-                                        long minutes = duration.toMinutes() % 60;
-
-                                        if (passed) {
-                                            System.out.println("passed " + (days * 24 + hours) + " hours " + minutes + " minutes ago");
-                                        } else {
-                                            System.out.println((days * 24 + hours) + " hours " + minutes + " minutes left");
-                                        }
+                                        System.out.print("The " + (j+1) + " everydays Task: ");
+                                        uiSystem.displaySpecificTask(t,TaskScale.EVERYDAY);
 
                                         System.out.println("Which parameter would you like to edit: ");
                                         System.out.println("1. Edit the name of the Task");
@@ -194,21 +176,9 @@ public class Main {
                                     while (true) {
                                         Task t = listOfGlobalTasks.get(j);
 
-                                        System.out.print("The " + (j+1) + " global Task: Name: " + t.getName() + ", Description: " + t.getDescription() + ", Priority: " + t.getPriority() + ", Deadline time: ");
+                                        System.out.print("The " + (j+1) + " global Task: ");
+                                        uiSystem.displaySpecificTask(t,TaskScale.GLOBAL);
 
-                                        Duration duration = Duration.between(now, t.getDeadline());
-                                        boolean passed = duration.isNegative();
-                                        duration = duration.abs();
-
-                                        long days = duration.toDays();
-                                        long hours = duration.toHours() % 24;
-                                        long minutes = duration.toMinutes() % 60;
-
-                                        if (passed) {
-                                            System.out.println("passed " + days + " days " + hours + " hours " + minutes + " minutes ago");
-                                        } else {
-                                            System.out.println(days + " days " + hours + " hours " + minutes + " minutes left");
-                                        }
                                         System.out.println("Which parameter would you like to edit: ");
                                         System.out.println("1. Edit the name of the Task");
                                         System.out.println("2. Edit the description of the Task");
@@ -283,6 +253,7 @@ public class Main {
                                     if (deleteEverydayTaskAction == (i+1)) {
                                         System.out.println("Task " + listOfEverydayTasks.get(i).getName() + " has been deleted successfully and permanently!");
                                         listOfEverydayTasks.remove(i);
+                                        break;
                                     }
                                 }
                             }
@@ -326,6 +297,7 @@ public class Main {
                                     if (deleteGlobalTaskAction == (i+1)) {
                                         System.out.println("Task " + listOfGlobalTasks.get(i).getName() + " has been deleted successfully and permanently!");
                                         listOfGlobalTasks.remove(i);
+                                        break;
                                     }
                                 }
                             }
