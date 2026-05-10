@@ -20,7 +20,7 @@ public class TaskService {
         while (true) {
             boolean flag = false;
             for (int i = 1; i < sortingList.size(); i++) {
-                if (sortingList.get(i).getPriority() < sortingList.get(i - 1).getPriority()) {
+                if (sortingList.get(i).getPriority().getValue() < sortingList.get(i - 1).getPriority().getValue()) {
                     Task temp;
                     temp = sortingList.get(i);
                     sortingList.set(i, sortingList.get(i - 1));
@@ -28,7 +28,7 @@ public class TaskService {
                 }
             }
             for (int j = 1; j < sortingList.size(); j++) {
-                if (sortingList.get(j).getPriority() < sortingList.get(j - 1).getPriority()) {
+                if (sortingList.get(j).getPriority().getValue() < sortingList.get(j - 1).getPriority().getValue()) {
                     flag = true;
                     break;
                 }
@@ -60,7 +60,7 @@ public class TaskService {
     public void editDescription(Task exactTask, String newDescription) {
         exactTask.setDescription(newDescription);
     }
-    public void editPriority(Task exactTask, int newPriority) {
+    public void editPriority(Task exactTask, Priority newPriority) {
         exactTask.setPriority(newPriority);
     }
     public void editDeadline(Task exactTask, LocalDateTime newDeadline) {
@@ -116,5 +116,15 @@ public class TaskService {
         list.remove(index);
     }
 
+    public List<Task> getOverdueTasks(List<Task> list) {
+        List<Task> overdueTasks = new ArrayList<>();
+        for (Task task : list) {
+            LocalDateTime now = LocalDateTime.now();
+            if (task.getDeadline().isBefore(now)) {
+                overdueTasks.add(task);
+            }
+        }
+        return overdueTasks;
+    }
 }
 

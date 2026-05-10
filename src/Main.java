@@ -49,8 +49,8 @@ public class Main {
                         task.setDescription(inputHandler.readString());
 
                         // Everydays task priority
-                        System.out.println("Enter the priority of the Task (1 - low, 2 - medium, 3 - high, or more if you want): ");
-                        task.setPriority(inputHandler.readNumber(Integer.MAX_VALUE));
+                        System.out.println("Enter the priority of the Task (1 - low, 2 - medium, 3 - high): ");
+                        task.setPriority();
 
                         // Everydays task deadlines
                         System.out.println("Enter the deadline (in hours) until the end: ");
@@ -717,10 +717,12 @@ public class Main {
                             // Display overdue tasks
                             if (overdueAction == 1) {
                                 System.out.println("Overdue everyday tasks: ");
-                                uiSystem.displayOverdueTasks(listOfEverydayTasks, TaskScale.EVERYDAY);
+                                List<Task> overdueTasks = taskService.getOverdueTasks(listOfEverydayTasks);
+                                uiSystem.display(overdueTasks, TaskScale.EVERYDAY);
                                 System.out.println();
                                 System.out.println("Overdue global tasks: ");
-                                uiSystem.displayOverdueTasks(listOfGlobalTasks, TaskScale.GLOBAL);
+                                overdueTasks = taskService.getOverdueTasks(listOfGlobalTasks);
+                                uiSystem.display(overdueTasks, TaskScale.GLOBAL);
                                 System.out.println();
                                 uiSystem.delay();
                             }
@@ -737,7 +739,8 @@ public class Main {
                                     // Add time to everyday overdue tasks
                                     if (overdueTimeAddAction == 1) {
                                         System.out.println("Which task would you like to add more time to: ");
-                                        uiSystem.displayOverdueTasks(listOfEverydayTasks, TaskScale.EVERYDAY);
+                                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfEverydayTasks);
+                                        uiSystem.display(overdueTasks, TaskScale.EVERYDAY);
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTasks = taskService.positionsOfOverdueTasks(listOfEverydayTasks);
                                         int actionsQuantity = trueIndexOfTasks.size();
@@ -754,7 +757,8 @@ public class Main {
                                     // Add time to global overdue tasks
                                     else if (overdueTimeAddAction == 2) {
                                         System.out.println("Which task would you like to add more time to: ");
-                                        uiSystem.displayOverdueTasks(listOfGlobalTasks, TaskScale.GLOBAL);
+                                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfGlobalTasks);
+                                        uiSystem.display(overdueTasks, TaskScale.GLOBAL);
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTasks = taskService.positionsOfOverdueTasks(listOfGlobalTasks);
                                         int actionsQuantity = trueIndexOfTasks.size();
@@ -787,7 +791,8 @@ public class Main {
                                     // Delete everyday overdue tasks
                                     if (deleteOverdueAction == 1) {
                                         System.out.println("Which Task would you like to delete?");
-                                        uiSystem.displayOverdueTasks(listOfEverydayTasks, TaskScale.EVERYDAY);
+                                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfEverydayTasks);
+                                        uiSystem.display(overdueTasks, TaskScale.EVERYDAY);
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfEverydayTasks);
                                         int actionsQuantity = trueIndexOfTask.size();
@@ -811,7 +816,8 @@ public class Main {
                                     // Delete global overdue tasks
                                     else if (deleteOverdueAction == 2) {
                                         System.out.println("Which Task would you like to delete?");
-                                        uiSystem.displayOverdueTasks(listOfGlobalTasks, TaskScale.GLOBAL);
+                                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfGlobalTasks);
+                                        uiSystem.display(overdueTasks, TaskScale.GLOBAL);
                                         System.out.println();
                                         LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfGlobalTasks);
                                         int actionsQuantity = trueIndexOfTask.size();

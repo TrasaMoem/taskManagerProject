@@ -5,16 +5,11 @@ import java.util.List;
 
 public class UISystem {
     private final InputHandler inputHandler = new InputHandler();
+    private final DateTimeFormatter f = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public void delay() {
         System.out.println("Print 1 to continue: ");
-        while(true) {
-            int delaying = inputHandler.readNumber(1);
-
-            if (delaying == 1) {
-                break;
-            }
-        }
+        inputHandler.readNumber(1);
     }
     public boolean sure() {
         System.out.println("Are you sure you want to do this action?");
@@ -52,43 +47,25 @@ public class UISystem {
         displaySpecificTaskDeadline(task, scale);
     }
 
-    public void displayOverdueTasks(List<Task> list, TaskScale scale) {
-        int overdueCounter = 0;
-        for (Task task : list) {
-            LocalDateTime now = LocalDateTime.now();
-            if (task.getDeadline().isBefore(now)) {
-                overdueCounter++;
-                System.out.print(overdueCounter + ") " + task.getName());
-                displaySpecificTaskDeadline(task, scale);
-            }
-        }
-        if (overdueCounter == 0) {
-            System.out.println("No overdue tasks");
-        }
-    }
     public void display(List<Task> list, TaskScale scale) {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                Task t = list.get(i);
-
-                System.out.print((i + 1) + ") Name: " + t.getName() + ", Description: " + t.getDescription() + ", Priority: " + t.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
-
-                displaySpecificTaskDeadline(t, scale);
+            for (Task t : list) {
+                displaySpecificTask(t, scale);
                 System.out.println();
             }
         }
     }
 
     public void statistics(List<Task> list, TaskScale scale) {
-        int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, moreThanHighPriorityCounter = 0, counterOfActiveTasks = 0;
+        int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, counterOfActiveTasks = 0;
         Task nearest = null, farthest = null;
         long totalMinutes = 0;
+        LocalDateTime now = LocalDateTime.now();
 
         // counter block
         for (Task t : list) {
-            LocalDateTime now = LocalDateTime.now();
             // Nearest deadline
             if (t.getDeadline().isAfter(now)) {
                 if (nearest == null || t.getDeadline().isBefore(nearest.getDeadline())) {
@@ -110,14 +87,12 @@ public class UISystem {
             // Overdue and priority counter
             if (t.getDeadline().isBefore(LocalDateTime.now())) {
                 overdueCounter++;
-            } if (t.getPriority() == 1) {
+            } if (t.getPriority().getValue() == 1) {
                 lowPriorityCounter++;
-            } else if (t.getPriority() == 2) {
+            } else if (t.getPriority().getValue() == 2) {
                 midPriorityCounter++;
-            } else if (t.getPriority() == 3) {
-                highPriorityCounter++;
             } else {
-                moreThanHighPriorityCounter++;
+                highPriorityCounter++;
             }
         }
         System.out.println("Statistic: ");
@@ -129,21 +104,18 @@ public class UISystem {
         System.out.println("Low priority tasks: " + lowPriorityCounter);
         System.out.println("Middle priority tasks: " + midPriorityCounter);
         System.out.println("High priority tasks: " + highPriorityCounter);
-        System.out.println("More than high priority tasks: " + moreThanHighPriorityCounter);
         System.out.println("---");
+
         if (nearest == null) {
             System.out.println("Nearest deadline: no active tasks");
         } else {
             System.out.print("Nearest deadline: " + nearest.getName() + " ");
-            DateTimeFormatter f = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             System.out.println(nearest.getDeadline().format(f));
         }
-        if (nearest == null) {
+        if (farthest == null) {
             System.out.println("Farthest deadline: no active tasks");
         } else {
-            assert farthest != null;
             System.out.print("Farthest deadline: " + farthest.getName() + " ");
-            DateTimeFormatter f = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             System.out.println(farthest.getDeadline().format(f));
         }
         System.out.println("---");
