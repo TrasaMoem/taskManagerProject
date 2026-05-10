@@ -426,7 +426,7 @@ public class Main {
 
                                         // First letter sort from A to Z
                                         if (sortEverydayTaskByNames == 1) {
-                                            taskService.sortByName(listOfEverydayTasks, SortParameters.fromAtoZ);
+                                            listOfEverydayTasks = taskService.sortByName(listOfEverydayTasks, SortParameters.fromAtoZ);
                                             System.out.println("Successfully sorted Everyday Tasks from A to Z!");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
@@ -434,7 +434,7 @@ public class Main {
                                         }
                                         // First letter sort from Z to A
                                         else if (sortEverydayTaskByNames == 2) {
-                                            taskService.sortByName(listOfEverydayTasks, SortParameters.fromZtoA);
+                                            listOfEverydayTasks = taskService.sortByName(listOfEverydayTasks, SortParameters.fromZtoA);
                                             System.out.println("Successfully sorted Everyday Tasks from Z to A!");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
@@ -478,7 +478,7 @@ public class Main {
 
                                         // Sort deadline from smallest to largest
                                         if (sortEverydayTaskSmallestOrLargestAction == 1) {
-                                            taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromSmallestToLargest);
+                                            listOfEverydayTasks = taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromSmallestToLargest);
                                             System.out.println("Successfully completed sort of Everyday Tasks by deadline from Smallest to Largest");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
@@ -486,7 +486,7 @@ public class Main {
                                         }
                                         // Sort deadline from largest to smallest
                                         else if (sortEverydayTaskSmallestOrLargestAction == 2) {
-                                            taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromLargestToSmallest);
+                                            listOfEverydayTasks = taskService.sortByDeadline(listOfEverydayTasks, SortParameters.fromLargestToSmallest);
                                             System.out.println("Successfully completed sort of Everyday Tasks by deadline from Largest to Smallest");
                                             uiSystem.display(listOfEverydayTasks, TaskScale.EVERYDAY);
                                             System.out.println();
@@ -521,7 +521,7 @@ public class Main {
 
                                             // Sort global tasks from A to Z
                                             if (sortGlobalTaskByNames == 1) {
-                                                taskService.sortByName(listOfGlobalTasks, SortParameters.fromAtoZ);
+                                                listOfGlobalTasks = taskService.sortByName(listOfGlobalTasks, SortParameters.fromAtoZ);
                                                 System.out.println("Successfully sorted Global Tasks from A to Z!");
                                                 uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                                 System.out.println();
@@ -529,7 +529,7 @@ public class Main {
                                             }
                                             // Sort global tasks from Z to A
                                             else if (sortGlobalTaskByNames == 2) {
-                                                taskService.sortByName(listOfGlobalTasks, SortParameters.fromZtoA);
+                                                listOfGlobalTasks = taskService.sortByName(listOfGlobalTasks, SortParameters.fromZtoA);
                                                 System.out.println("Successfully sorted Global Tasks from Z to A!");
                                                 uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                                 System.out.println();
@@ -578,7 +578,7 @@ public class Main {
 
                                         // Sort global tasks by deadline from smallest to largest
                                         if (sortGlobalTaskSmallestOrLargestAction == 1) {
-                                            taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromSmallestToLargest);
+                                            listOfGlobalTasks = taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromSmallestToLargest);
                                             System.out.println("Successfully completed sort of Global Tasks by deadline from Smallest to Largest");
                                             uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                             System.out.println();
@@ -586,7 +586,7 @@ public class Main {
                                         }
                                         // Sort global tasks by deadline from largest to smallest
                                         else if (sortGlobalTaskSmallestOrLargestAction == 2) {
-                                            taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromLargestToSmallest);
+                                            listOfGlobalTasks = taskService.sortByDeadline(listOfGlobalTasks, SortParameters.fromLargestToSmallest);
                                             System.out.println("Successfully completed sort of Global Tasks by deadline from Largest to Smallest");
                                             uiSystem.display(listOfGlobalTasks, TaskScale.GLOBAL);
                                             System.out.println();

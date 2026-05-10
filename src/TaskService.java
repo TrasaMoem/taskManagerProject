@@ -3,15 +3,17 @@ import java.util.*;
 
 public class TaskService {
 
-    public void sortByName(List<Task> list, SortParameters sortFromAtoZorZtoA) {
+    public List<Task> sortByName(List<Task> list, SortParameters sortFromAtoZorZtoA) {
+        List<Task> sortingList = new ArrayList<>(list);
         // Sort from A to Z
         if (sortFromAtoZorZtoA == SortParameters.fromAtoZ) {
-            list.sort(Comparator.comparing(Task::getName));
+            sortingList.sort(Comparator.comparing(Task::getName));
         }
         // Sort from Z to A
         else {
-            list.sort(Comparator.comparing(Task::getName).reversed());
+            sortingList.sort(Comparator.comparing(Task::getName).reversed());
         }
+        return sortingList;
     }
 
     public List<Task> sortByPriority(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
@@ -44,14 +46,16 @@ public class TaskService {
         }
     }
 
-    public void sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
+    public List<Task> sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
+        List<Task> sortingList = new ArrayList<>(list);
         if (sortFromSmallestToLargestOrLargestToSmallest == SortParameters.fromSmallestToLargest) {
             // sort from Smallest to Largest deadline
-            list.sort(Comparator.comparing(Task::getDeadline));
+            sortingList.sort(Comparator.comparing(Task::getDeadline));
         } else {
             // sort from Largest to smallest deadline
-            list.sort(Comparator.comparing(Task::getDeadline).reversed());
+            sortingList.sort(Comparator.comparing(Task::getDeadline).reversed());
         }
+        return sortingList;
     }
 
     public void editName(List<Task> list, int specificTaskNumber, String newName) {
