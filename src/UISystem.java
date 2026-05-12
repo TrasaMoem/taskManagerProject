@@ -60,53 +60,23 @@ public class UISystem {
     }
 
     public void statistics(List<Task> list, TaskScale scale) {
-        int overdueCounter = 0, lowPriorityCounter = 0, midPriorityCounter = 0, highPriorityCounter = 0, counterOfActiveTasks = 0;
-        Task nearest = null, farthest = null;
-        long totalMinutes = 0;
-        LocalDateTime now = LocalDateTime.now();
-
         // counter block
-        for (Task t : list) {
-            // Nearest deadline
-            if (t.getDeadline().isAfter(now)) {
-                if (nearest == null || t.getDeadline().isBefore(nearest.getDeadline())) {
-                    nearest = t;
-                }
-            }
-            // Farthest deadline
-            if (t.getDeadline().isAfter(now)) {
-                if (farthest == null || t.getDeadline().isAfter(farthest.getDeadline())) {
-                    farthest = t;
-                }
-            }
-            // Average deadline counter
-            Duration duration = Duration.between(now, t.getDeadline());
-            if (!duration.isNegative()) {
-                totalMinutes += duration.toMinutes();
-                counterOfActiveTasks++;
-            }
-            // Overdue and priority counter
-            if (t.getDeadline().isBefore(LocalDateTime.now())) {
-                overdueCounter++;
-            } if (t.getPriority().getValue() == 1) {
-                lowPriorityCounter++;
-            } else if (t.getPriority().getValue() == 2) {
-                midPriorityCounter++;
-            } else {
-                highPriorityCounter++;
-            }
-        }
+        Statistics statistics = new Statistics();
+        statistics.calculateStatistics(list, scale);
+
         System.out.println("Statistic: ");
         System.out.println("Total number of " + scale + " tasks: " + list.size());
         System.out.println("---");
-        System.out.println("Overdue tasks: " + overdueCounter);
-        System.out.println("Active tasks: " + (list.size() - overdueCounter));
+        System.out.println("Overdue tasks: " + statistics.getOverdueCounter());
+        System.out.println("Active tasks: " + (list.size() - statistics.getOverdueCounter()));
         System.out.println("---");
-        System.out.println("Low priority tasks: " + lowPriorityCounter);
-        System.out.println("Middle priority tasks: " + midPriorityCounter);
-        System.out.println("High priority tasks: " + highPriorityCounter);
+        System.out.println("Low priority tasks: " + statistics.getLowPriorityCounter());
+        System.out.println("Middle priority tasks: " + statistics.getMidPriorityCounter());
+        System.out.println("High priority tasks: " + statistics.getHighPriorityCounter());
         System.out.println("---");
 
+        Task nearest = statistics.getNearest();
+        Task farthest = statistics.getFarthest();
         if (nearest == null) {
             System.out.println("Nearest deadline: no active tasks");
         } else {
@@ -120,21 +90,19 @@ public class UISystem {
             System.out.println(farthest.getDeadline().format(f));
         }
         System.out.println("---");
-        if (counterOfActiveTasks == 0) {
+        if (statistics.getCounterOfActiveTasks() == 0) {
             System.out.println("Average time to deadline: no active tasks");
         } else {
             if (scale == TaskScale.EVERYDAY) {
-                long averageMinutes = totalMinutes / counterOfActiveTasks, totalAverageHours = averageMinutes / 60, totalAverageMinutes = totalMinutes % 60;
-                System.out.println("Average time to deadline: " + totalAverageHours + " hours, " + totalAverageMinutes + " minutes");
+                System.out.println("Average time to deadline: " + statistics.getTotalAverageHours() + " hours, " + statistics.getTotalAverageMinutes() + " minutes");
             } else {
-                long averageMinutes = totalMinutes / counterOfActiveTasks, totalAverageDays = averageMinutes / (60 * 24), totalAverageHours = (averageMinutes / 60) % 24, totalAverageMinutes = totalMinutes % 60;
-                System.out.println("Average time to deadline: " + totalAverageDays + " days, " + totalAverageHours + " hours, " + totalAverageMinutes + " minutes");
+                System.out.println("Average time to deadline: " + statistics.getTotalAverageDays() + " days, " + statistics.getTotalAverageHours() + " hours, " + statistics.getTotalAverageMinutes() + " minutes");
             }
         }
-        try {
-            System.out.println("Percent of overdue tasks: " + ((100*overdueCounter) / list.size() + "%"));
-        } catch (Exception e) {
-            System.out.println("Percent of overdue tasks: no overdue tasks or empty task list");
+        if (list.isEmpty()) {
+            System.out.println("Percent of overdue tasks: empty task list");
+        } else {
+            System.out.println("Percent of overdue tasks: " + (statistics.getPercentOfOverdueTasks() + "%"));
         }
     }
 
