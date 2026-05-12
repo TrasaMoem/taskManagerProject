@@ -62,7 +62,7 @@ public class UISystem {
     public void statistics(List<Task> list, TaskScale scale) {
         // counter block
         Statistics statistics = new Statistics();
-        statistics.calculateStatistics(list, scale);
+        statistics.calculateStatistics(list);
 
         System.out.println("Statistic: ");
         System.out.println("Total number of " + scale + " tasks: " + list.size());
@@ -93,6 +93,7 @@ public class UISystem {
         if (statistics.getCounterOfActiveTasks() == 0) {
             System.out.println("Average time to deadline: no active tasks");
         } else {
+            statistics.calculateTimeForStatistics(scale);
             if (scale == TaskScale.EVERYDAY) {
                 System.out.println("Average time to deadline: " + statistics.getTotalAverageHours() + " hours, " + statistics.getTotalAverageMinutes() + " minutes");
             } else {
@@ -102,6 +103,7 @@ public class UISystem {
         if (list.isEmpty()) {
             System.out.println("Percent of overdue tasks: empty task list");
         } else {
+            statistics.calculatePercentOfOverdueTasks(list);
             System.out.println("Percent of overdue tasks: " + (statistics.getPercentOfOverdueTasks() + "%"));
         }
     }

@@ -5,14 +5,11 @@ import java.util.List;
 public class Statistics {
     private int overdueCounter , lowPriorityCounter , midPriorityCounter , highPriorityCounter , counterOfActiveTasks, percentOfOverdueTasks;
     private Task nearest, farthest ;
-    private long totalMinutes;
-    private long totalAverageDays;
-    private long totalAverageHours;
-    private long totalAverageMinutes;
+    private long totalMinutes, totalAverageDays, totalAverageHours, totalAverageMinutes;
     private final LocalDateTime now = LocalDateTime.now();
 
 
-    public void calculateStatistics(List<Task> list, TaskScale scale) {
+    public void calculateStatistics(List<Task> list) {
         for (Task t : list) {
             // Nearest deadline
             if (t.getDeadline().isAfter(now)) {
@@ -41,6 +38,8 @@ public class Statistics {
                 highPriorityCounter++;
             }
         }
+    }
+    public void calculateTimeForStatistics(TaskScale scale) {
         long averageMinutes;
         if (scale == TaskScale.EVERYDAY) {
             averageMinutes = totalMinutes / counterOfActiveTasks;
@@ -52,8 +51,9 @@ public class Statistics {
             totalAverageHours = (averageMinutes / 60) % 24;
             totalAverageMinutes = averageMinutes % 60;
         }
+    }
+    public void calculatePercentOfOverdueTasks(List<Task> list) {
         percentOfOverdueTasks = (100*overdueCounter) / list.size();
-
     }
     public int getOverdueCounter() {
         return overdueCounter;
