@@ -27,8 +27,16 @@ public class Task {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
-        this.priority = priority;
+    public void setPriority(int priority) {
+        if (priority == 1) {
+            this.priority = Priority.LOW;
+        }
+        else if (priority == 2) {
+            this.priority = Priority.MEDIUM;
+        }
+        else if (priority == 3) {
+            this.priority = Priority.HIGH;
+        }
     }
 
     public LocalDateTime getDeadline() {

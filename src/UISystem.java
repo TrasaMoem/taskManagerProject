@@ -43,7 +43,7 @@ public class UISystem {
         }
     }
     public void displaySpecificTask(Task task, TaskScale scale) {
-        System.out.print("Name: " + task.getName() + ", Description: " + task.getDescription() + ", Priority: " + task.getPriority() + " (1 - low, 2 - medium, 3 - high), Deadline time: ");
+        System.out.print("Name: " + task.getName() + ", Description: " + task.getDescription() + ", Priority: " + task.getPriority() + ", Deadline time: ");
         displaySpecificTaskDeadline(task, scale);
     }
 
@@ -51,8 +51,9 @@ public class UISystem {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
-            for (Task t : list) {
-                displaySpecificTask(t, scale);
+            for (int i = 0; i < list.size(); i++) {
+                System.out.print((i+1) + ") ");
+                displaySpecificTask(list.get(i), scale);
                 System.out.println();
             }
         }

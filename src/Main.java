@@ -50,7 +50,7 @@ public class Main {
 
                         // Everydays task priority
                         System.out.println("Enter the priority of the Task (1 - low, 2 - medium, 3 - high): ");
-                        task.setPriority();
+                        task.setPriority(inputHandler.readNumber(3));
 
                         // Everydays task deadlines
                         System.out.println("Enter the deadline (in hours) until the end: ");
@@ -147,8 +147,8 @@ public class Main {
                                         }
                                         // Edit priority of everyday task
                                         else if (editSpecificParameter == 3) {
-                                            System.out.println("Enter new priority of the Task (old: " + listOfEverydayTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
-                                            int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            System.out.println("Enter new priority of the Task (old: " + listOfEverydayTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high): ");
+                                            int newPriority = inputHandler.readNumber(3);
                                             Task exactTask = listOfEverydayTasks.get(j);
                                             taskService.editPriority(exactTask, newPriority);
                                             System.out.println("New priority " + listOfEverydayTasks.get(j).getPriority() + " has been edited successfully!");
@@ -226,8 +226,8 @@ public class Main {
                                         }
                                         // Edit priority of global task
                                         else if (editSpecificParameter == 3) {
-                                            System.out.println("Enter new priority of the Task (old: " + listOfGlobalTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high, or more if you want): ");
-                                            int newPriority = inputHandler.readNumber(Integer.MAX_VALUE);
+                                            System.out.println("Enter new priority of the Task (old: " + listOfGlobalTasks.get(j).getPriority() + "), (1 - low, 2 - medium, 3 - high): ");
+                                            int newPriority = inputHandler.readNumber(3);
                                             Task exactTask = listOfGlobalTasks.get(j);
                                             taskService.editPriority(exactTask, newPriority);
                                             System.out.println("New priority " + listOfGlobalTasks.get(j).getPriority() + " has been edited successfully!");

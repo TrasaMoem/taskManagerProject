@@ -60,7 +60,7 @@ public class TaskService {
     public void editDescription(Task exactTask, String newDescription) {
         exactTask.setDescription(newDescription);
     }
-    public void editPriority(Task exactTask, Priority newPriority) {
+    public void editPriority(Task exactTask, int newPriority) {
         exactTask.setPriority(newPriority);
     }
     public void editDeadline(Task exactTask, LocalDateTime newDeadline) {
