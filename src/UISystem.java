@@ -59,9 +59,9 @@ public class UISystem {
         }
     }
 
-    public void statistics(List<Task> list, TaskScale scale) {
+    public void statistics(List<Task> list, TaskScale scale, Statistics statistics) {
+        statistics.reset();
         // counter block
-        Statistics statistics = new Statistics();
         statistics.calculateStatistics(list);
 
         System.out.println("Statistic: ");

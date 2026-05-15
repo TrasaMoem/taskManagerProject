@@ -6,10 +6,9 @@ public class Statistics {
     private int overdueCounter , lowPriorityCounter , midPriorityCounter , highPriorityCounter , counterOfActiveTasks, percentOfOverdueTasks;
     private Task nearest, farthest ;
     private long totalMinutes, totalAverageDays, totalAverageHours, totalAverageMinutes;
-    private final LocalDateTime now = LocalDateTime.now();
-
 
     public void calculateStatistics(List<Task> list) {
+        LocalDateTime now = LocalDateTime.now();
         for (Task t : list) {
             // Nearest deadline
             if (t.getDeadline().isAfter(now)) {
@@ -41,19 +40,37 @@ public class Statistics {
     }
     public void calculateTimeForStatistics(TaskScale scale) {
         long averageMinutes;
-        if (scale == TaskScale.EVERYDAY) {
-            averageMinutes = totalMinutes / counterOfActiveTasks;
-            totalAverageHours = averageMinutes / 60;
-            totalAverageMinutes = averageMinutes % 60;
-        } else {
-            averageMinutes = totalMinutes / counterOfActiveTasks;
-            totalAverageDays = averageMinutes / (60 * 24);
-            totalAverageHours = (averageMinutes / 60) % 24;
-            totalAverageMinutes = averageMinutes % 60;
+        if(!(counterOfActiveTasks == 0)) {
+            if (scale == TaskScale.EVERYDAY) {
+                averageMinutes = totalMinutes / counterOfActiveTasks;
+                totalAverageHours = averageMinutes / 60;
+                totalAverageMinutes = averageMinutes % 60;
+            } else {
+                averageMinutes = totalMinutes / counterOfActiveTasks;
+                totalAverageDays = averageMinutes / (60 * 24);
+                totalAverageHours = (averageMinutes / 60) % 24;
+                totalAverageMinutes = averageMinutes % 60;
+            }
         }
     }
     public void calculatePercentOfOverdueTasks(List<Task> list) {
-        percentOfOverdueTasks = (100*overdueCounter) / list.size();
+        if (!list.isEmpty()) {
+            percentOfOverdueTasks = (100*overdueCounter) / list.size();
+        }
+    }
+    public void reset() {
+        overdueCounter = 0;
+        lowPriorityCounter = 0;
+        midPriorityCounter = 0;
+        highPriorityCounter = 0;
+        counterOfActiveTasks = 0;
+        percentOfOverdueTasks = 0;
+        nearest = null;
+        farthest = null;
+        totalMinutes = 0;
+        totalAverageDays = 0;
+        totalAverageHours = 0;
+        totalAverageMinutes = 0;
     }
     public int getOverdueCounter() {
         return overdueCounter;

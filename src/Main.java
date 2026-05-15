@@ -10,6 +10,7 @@ public class Main {
         TaskService taskService = new TaskService();
         TaskStorageService storage = new TaskStorageService();
         UISystem uiSystem = new UISystem();
+        Statistics statistics = new Statistics();
         List<Task> listOfEverydayTasks = storage.loadTasks(EVERYDAY_FILE_NAME);
         List<Task> listOfGlobalTasks = storage.loadTasks(GLOBAL_FILE_NAME);
         // If one of lists is equals null
@@ -682,19 +683,19 @@ public class Main {
 
                             // Everyday tasks statistic
                             if (getStatisticsAction == 1) {
-                                uiSystem.statistics(listOfEverydayTasks, TaskScale.EVERYDAY);
+                                uiSystem.statistics(listOfEverydayTasks, TaskScale.EVERYDAY, statistics);
                                 uiSystem.delay();
                             }
                             // Global statistics
                             else if (getStatisticsAction == 2) {
-                                uiSystem.statistics(listOfGlobalTasks, TaskScale.GLOBAL);
+                                uiSystem.statistics(listOfGlobalTasks, TaskScale.GLOBAL, statistics);
                                 uiSystem.delay();
                             }
                             // General statistics
                             else if (getStatisticsAction == 3) {
                                 ArrayList<Task> allTasks = new ArrayList<>(listOfEverydayTasks);
                                 allTasks.addAll(listOfGlobalTasks);
-                                uiSystem.statistics(allTasks, TaskScale.GENERAL);
+                                uiSystem.statistics(allTasks, TaskScale.GENERAL, statistics);
                                 uiSystem.delay();
                             }
                             // Exit statistics display
