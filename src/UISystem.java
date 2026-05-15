@@ -65,31 +65,62 @@ public class UISystem {
         statistics.calculateStatistics(list);
 
         System.out.println("Statistic: ");
-        System.out.println("Total number of " + scale + " tasks: " + list.size());
-        System.out.println("---");
-        System.out.println("Overdue tasks: " + statistics.getOverdueCounter());
-        System.out.println("Active tasks: " + (list.size() - statistics.getOverdueCounter()));
-        System.out.println("---");
-        System.out.println("Low priority tasks: " + statistics.getLowPriorityCounter());
-        System.out.println("Middle priority tasks: " + statistics.getMidPriorityCounter());
-        System.out.println("High priority tasks: " + statistics.getHighPriorityCounter());
+
+        displayTotalNumberOfAnyTasks(scale, list.size());
+
         System.out.println("---");
 
-        Task nearest = statistics.getNearest();
-        Task farthest = statistics.getFarthest();
+        displayNumberOfEachTypeOfTasks(statistics, list);
+
+        System.out.println("---");
+
+        displayStatisticsPriorityOfTheTasks(statistics.getLowPriorityCounter(), statistics.getMidPriorityCounter(), statistics.getHighPriorityCounter());
+
+        System.out.println("---");
+
+        displayNearestDeadline(statistics.getNearest());
+        displayFarthestDeadline(statistics.getFarthest());
+
+        System.out.println("---");
+
+        displayAverageTimeToDeadline(statistics, scale);
+        displayPercentOfOverdueTasks(list, statistics);
+
+    }
+    public void displayTotalNumberOfAnyTasks(TaskScale scale, int amountOfTasks) {
+        System.out.println("Total number of " + scale + " tasks: " + amountOfTasks);
+    }
+
+    public void displayNumberOfEachTypeOfTasks(Statistics statistics, List<Task> list) {
+        System.out.println("Overdue tasks: " + statistics.getOverdueCounter());
+        System.out.println("Active tasks: " + (list.size() - statistics.getOverdueCounter()));
+    }
+
+    public void displayStatisticsPriorityOfTheTasks(int lowPriorityCounter, int mediumPriorityCounter, int highPriorityCounter) {
+        System.out.println("Low priority tasks: " + lowPriorityCounter);
+        System.out.println("Middle priority tasks: " + mediumPriorityCounter);
+        System.out.println("High priority tasks: " + highPriorityCounter);
+    }
+
+    public void displayNearestDeadline(Task nearest) {
         if (nearest == null) {
             System.out.println("Nearest deadline: no active tasks");
         } else {
             System.out.print("Nearest deadline: " + nearest.getName() + " ");
             System.out.println(nearest.getDeadline().format(f));
         }
+    }
+
+    public void displayFarthestDeadline(Task farthest) {
         if (farthest == null) {
             System.out.println("Farthest deadline: no active tasks");
         } else {
             System.out.print("Farthest deadline: " + farthest.getName() + " ");
             System.out.println(farthest.getDeadline().format(f));
         }
-        System.out.println("---");
+    }
+
+    public void displayAverageTimeToDeadline(Statistics statistics, TaskScale scale) {
         if (statistics.getCounterOfActiveTasks() == 0) {
             System.out.println("Average time to deadline: no active tasks");
         } else {
@@ -100,6 +131,9 @@ public class UISystem {
                 System.out.println("Average time to deadline: " + statistics.getTotalAverageDays() + " days, " + statistics.getTotalAverageHours() + " hours, " + statistics.getTotalAverageMinutes() + " minutes");
             }
         }
+    }
+
+    public void displayPercentOfOverdueTasks(List<Task> list, Statistics statistics) {
         if (list.isEmpty()) {
             System.out.println("Percent of overdue tasks: empty task list");
         } else {
