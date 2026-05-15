@@ -126,5 +126,15 @@ public class TaskService {
         }
         return overdueTasks;
     }
+
+    public LocalDateTime getTimeFromInt(int time, TaskScale scale) {
+        LocalDateTime dateTime;
+        if (scale == TaskScale.EVERYDAY) {
+            dateTime = LocalDateTime.now().plusHours(time);
+        } else {
+            dateTime = LocalDateTime.now().plusDays(time);
+        }
+        return dateTime;
+    }
 }
 

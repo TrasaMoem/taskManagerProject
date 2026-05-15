@@ -55,7 +55,7 @@ public class Main {
 
                         // Everydays task deadlines
                         System.out.println("Enter the deadline (in hours) until the end: ");
-                        task.setDeadline(inputHandler.readDateTime(TaskScale.EVERYDAY));
+                        task.setDeadline(taskService.getTimeFromInt(inputHandler.readNumber(Integer.MAX_VALUE), TaskScale.EVERYDAY));
 
                         // Add new everyday task to the array
                         listOfEverydayTasks.add(task);
@@ -78,7 +78,7 @@ public class Main {
 
                         // Global task deadlines
                         System.out.println("Enter the deadline (in days) until the end of the Task: ");
-                        task.setDeadline(inputHandler.readDateTime(TaskScale.GLOBAL));
+                        task.setDeadline(taskService.getTimeFromInt(inputHandler.readNumber(Integer.MAX_VALUE), TaskScale.GLOBAL));
 
                         // Add new global task to array
                         listOfGlobalTasks.add(task);
@@ -159,7 +159,7 @@ public class Main {
                                             System.out.print("Enter new deadline of the Task (in hours) until the end of the Task (old: ");
                                             uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
                                             System.out.println("): ");
-                                            LocalDateTime newDataTime = inputHandler.readDateTime(TaskScale.EVERYDAY);
+                                            LocalDateTime newDataTime = taskService.getTimeFromInt(inputHandler.readNumber(Integer.MAX_VALUE), TaskScale.EVERYDAY);
                                             Task exactTask = listOfEverydayTasks.get(j);
                                             taskService.editDeadline(exactTask, newDataTime);
                                             uiSystem.displaySpecificTaskDeadline(listOfEverydayTasks.get(j), TaskScale.EVERYDAY);
@@ -238,7 +238,7 @@ public class Main {
                                             System.out.print("Enter new deadline of the Task (in days) until the end of the Task (old: ");
                                             uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
                                             System.out.println("): ");
-                                            LocalDateTime newDeadline = inputHandler.readDateTime(TaskScale.GLOBAL);
+                                            LocalDateTime newDeadline = taskService.getTimeFromInt(inputHandler.readNumber(Integer.MAX_VALUE), TaskScale.GLOBAL);
                                             Task exactTask = listOfGlobalTasks.get(j);
                                             taskService.editDeadline(exactTask, newDeadline);
                                             uiSystem.displaySpecificTaskDeadline(listOfGlobalTasks.get(j), TaskScale.GLOBAL);
