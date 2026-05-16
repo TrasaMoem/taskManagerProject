@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MenuController {
     InputHandler inputHandler = new InputHandler();
-    TaskService taskService = new TaskService();
-    UISystem uiSystem = new UISystem();
     SubMenuController subMenuController = new SubMenuController();
     TaskStorageService storage = new TaskStorageService();
     Statistics statistics = new Statistics();
@@ -259,7 +256,7 @@ public class MenuController {
             }
             // Add more time to deadline of overdue tasks
             else if (overdueAction == 2) {
-                subMenuController.addTimeToOverdueTaskActionMenu();
+                subMenuController.addTimeToOverdueTaskActionMenu(listOfEverydayTasks, listOfGlobalTasks);
             }
             // Delete overdue tasks
             else if (overdueAction == 3) {
@@ -273,53 +270,11 @@ public class MenuController {
 
                     // Delete everyday overdue tasks
                     if (deleteOverdueAction == 1) {
-                        System.out.println("Which Task would you like to delete?");
-                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfEverydayTasks);
-                        uiSystem.display(overdueTasks, TaskScale.EVERYDAY);
-                        System.out.println();
-                        LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfEverydayTasks);
-                        int actionsQuantity = trueIndexOfTask.size();
-                        System.out.println((actionsQuantity+1) + ") Delete all Everyday overdue Tasks");
-                        System.out.println((actionsQuantity+2) + ") Back to previous page");
-                        int overdueEverydayTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);
-                        if (overdueEverydayTaskDeleteAction == actionsQuantity+1) {
-                            boolean sure = uiSystem.sure();
-                            if (sure) {
-                                taskService.deleteAllOverdueTasks(listOfEverydayTasks, actionsQuantity, trueIndexOfTask);
-                            } else {
-                                System.out.println("No changes were made");
-                            }
-                        } else if (overdueEverydayTaskDeleteAction != actionsQuantity+2) {
-                            int index = trueIndexOfTask.get(overdueEverydayTaskDeleteAction-1);
-                            String rememberName = listOfEverydayTasks.get(index).getName();
-                            taskService.deleteSpecificOverdueTask(listOfEverydayTasks, index);
-                            System.out.println("Successfully deleted overdue Task " + rememberName + "!");
-                        }
+                        subMenuController.deleteOverdueTaskActionMenu(listOfEverydayTasks, TaskScale.EVERYDAY);
                     }
                     // Delete global overdue tasks
                     else if (deleteOverdueAction == 2) {
-                        System.out.println("Which Task would you like to delete?");
-                        List<Task> overdueTasks = taskService.getOverdueTasks(listOfGlobalTasks);
-                        uiSystem.display(overdueTasks, TaskScale.GLOBAL);
-                        System.out.println();
-                        LinkedHashMap<Integer,Integer> trueIndexOfTask = taskService.positionsOfOverdueTasks(listOfGlobalTasks);
-                        int actionsQuantity = trueIndexOfTask.size();
-                        System.out.println((actionsQuantity+1) + ") Delete all Global overdue Tasks");
-                        System.out.println((actionsQuantity+2) + ") Back to previous page");
-                        int overdueGlobalTaskDeleteAction = inputHandler.readNumber(actionsQuantity + 2);
-                        if (overdueGlobalTaskDeleteAction == actionsQuantity+1) {
-                            boolean sure = uiSystem.sure();
-                            if (sure) {
-                                taskService.deleteAllOverdueTasks(listOfGlobalTasks, actionsQuantity, trueIndexOfTask);
-                            } else {
-                                System.out.println("No changes were made");
-                            }
-                        } else if (overdueGlobalTaskDeleteAction != actionsQuantity+2) {
-                            int index = trueIndexOfTask.get(overdueGlobalTaskDeleteAction-1);
-                            String rememberName = listOfGlobalTasks.get(index).getName();
-                            taskService.deleteSpecificOverdueTask(listOfGlobalTasks, index);
-                            System.out.println("Successfully deleted overdue Task " + rememberName + "!");
-                        }
+                        subMenuController.deleteOverdueTaskActionMenu(listOfGlobalTasks, TaskScale.GLOBAL);
                     }
                     // Exit deleting overdue tasks
                     else {
