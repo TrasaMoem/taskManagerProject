@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -13,7 +12,7 @@ public class InputHandler {
                     System.out.println("Invalid input, please try again");
                     continue;
                 }
-            } catch (InputMismatchException e) {
+            } catch (Exception e) {
                 System.out.println("Invalid input, please try again");
                 continue;
             }

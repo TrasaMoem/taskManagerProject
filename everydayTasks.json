@@ -1,110 +1,830 @@
 [
   {
+    "name": "Купить продукты",
+    "description": "Сходить в магазин за овощами",
+    "priority": "LOW",
+    "deadline": "2026-06-03T09:14:11.120431"
+  },
+  {
+    "name": "Подготовить отчет",
+    "description": "Собрать данные за квартал",
+    "priority": "HIGH",
+    "deadline": "2026-06-04T14:25:33.531244"
+  },
+  {
+    "name": "Позвонить клиенту",
+    "description": "Обсудить детали проекта",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-05T18:11:54.884321"
+  },
+  {
+    "name": "Сделать тренировку",
+    "description": "Пробежать 5 километров",
+    "priority": "LOW",
+    "deadline": "2026-06-06T07:42:12.115678"
+  },
+  {
+    "name": "Проверить почту",
+    "description": "Ответить на важные сообщения",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-07T11:37:49.002341"
+  },
+  {
+    "name": "Обновить сайт",
+    "description": "Добавить новый раздел",
+    "priority": "HIGH",
+    "deadline": "2026-06-08T16:50:22.764512"
+  },
+  {
+    "name": "Записаться к врачу",
+    "description": "Назначить плановый осмотр",
+    "priority": "LOW",
+    "deadline": "2026-06-09T10:18:41.512334"
+  },
+  {
+    "name": "Изучить Java",
+    "description": "Прочитать главу про коллекции",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-10T20:09:03.778812"
+  },
+  {
+    "name": "Сделать резервную копию",
+    "description": "Сохранить файлы проекта",
+    "priority": "HIGH",
+    "deadline": "2026-06-11T08:29:16.902144"
+  },
+  {
+    "name": "Убрать комнату",
+    "description": "Пропылесосить и вытереть пыль",
+    "priority": "LOW",
+    "deadline": "2026-06-12T13:44:29.110923"
+  },
+  {
+    "name": "Написать статью",
+    "description": "Подготовить материал для блога",
+    "priority": "HIGH",
+    "deadline": "2026-06-13T17:58:47.221144"
+  },
+  {
+    "name": "Посмотреть вебинар",
+    "description": "Изучить новые технологии",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-14T19:22:54.331245"
+  },
+  {
+    "name": "Купить билет",
+    "description": "Оформить поездку на выходные",
+    "priority": "LOW",
+    "deadline": "2026-06-15T06:11:12.991245"
+  },
+  {
+    "name": "Собрать документы",
+    "description": "Подготовить бумаги для встречи",
+    "priority": "HIGH",
+    "deadline": "2026-06-16T12:39:01.882341"
+  },
+  {
+    "name": "Прочитать книгу",
+    "description": "Закончить последнюю главу",
+    "priority": "LOW",
+    "deadline": "2026-06-17T21:17:43.671234"
+  },
+  {
+    "name": "Создать презентацию",
+    "description": "Подготовить слайды для доклада",
+    "priority": "HIGH",
+    "deadline": "2026-06-18T09:28:18.119823"
+  },
+  {
+    "name": "Сделать покупки",
+    "description": "Купить подарки друзьям",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-19T15:43:28.112345"
+  },
+  {
+    "name": "Проверить сервер",
+    "description": "Посмотреть логи системы",
+    "priority": "HIGH",
+    "deadline": "2026-06-20T18:54:41.552311"
+  },
+  {
+    "name": "Приготовить ужин",
+    "description": "Сделать пасту и салат",
+    "priority": "LOW",
+    "deadline": "2026-06-21T20:11:10.442111"
+  },
+  {
+    "name": "Настроить проект",
+    "description": "Обновить зависимости Maven",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-22T08:07:57.001923"
+  },
+  {
+    "name": "Запустить тесты",
+    "description": "Проверить работоспособность кода",
+    "priority": "HIGH",
+    "deadline": "2026-06-23T14:55:44.987612"
+  },
+  {
+    "name": "Посетить музей",
+    "description": "Сходить на новую выставку",
+    "priority": "LOW",
+    "deadline": "2026-06-24T11:24:37.001244"
+  },
+  {
+    "name": "Обновить резюме",
+    "description": "Добавить новый опыт работы",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-25T16:12:23.555123"
+  },
+  {
+    "name": "Проверить базу данных",
+    "description": "Удалить старые записи",
+    "priority": "HIGH",
+    "deadline": "2026-06-26T19:41:19.778345"
+  },
+  {
+    "name": "Сходить в кино",
+    "description": "Посмотреть новый фильм",
+    "priority": "LOW",
+    "deadline": "2026-06-27T22:05:49.991221"
+  },
+  {
+    "name": "Изучить Spring",
+    "description": "Разобраться с dependency injection",
+    "priority": "HIGH",
+    "deadline": "2026-06-28T09:33:41.114512"
+  },
+  {
+    "name": "Сделать заметки",
+    "description": "Записать идеи для проекта",
+    "priority": "LOW",
+    "deadline": "2026-06-29T10:18:14.661245"
+  },
+  {
+    "name": "Проверить API",
+    "description": "Протестировать эндпоинты",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-30T13:22:11.991111"
+  },
+  {
+    "name": "Обновить библиотеку",
+    "description": "Поставить новую версию Gson",
+    "priority": "HIGH",
+    "deadline": "2026-06-01T21:11:09.775421"
+  },
+  {
+    "name": "Позаниматься английским",
+    "description": "Выучить новые слова",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-02T07:18:45.881221"
+  },
+  {
+    "name": "Сделать коммит",
+    "description": "Отправить изменения в Git",
+    "priority": "HIGH",
+    "deadline": "2026-06-03T12:47:58.774521"
+  },
+  {
+    "name": "Полить цветы",
+    "description": "Ухаживать за растениями",
+    "priority": "LOW",
+    "deadline": "2026-07-04T08:14:21.665441"
+  },
+  {
+    "name": "Подготовить встречу",
+    "description": "Составить список вопросов",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-05T15:31:41.994421"
+  },
+  {
+    "name": "Сделать рефакторинг",
+    "description": "Упростить структуру классов",
+    "priority": "HIGH",
+    "deadline": "2026-06-06T18:43:55.112412"
+  },
+  {
+    "name": "Погулять",
+    "description": "Пройтись по парку",
+    "priority": "LOW",
+    "deadline": "2026-05-07T20:55:10.774221"
+  },
+  {
+    "name": "Изучить Docker",
+    "description": "Создать первый контейнер",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-08T11:23:41.004511"
+  },
+  {
+    "name": "Исправить баг",
+    "description": "Найти проблему в логике",
+    "priority": "HIGH",
+    "deadline": "2026-05-09T13:48:27.663421"
+  },
+  {
+    "name": "Сделать кофе",
+    "description": "Приготовить латте",
+    "priority": "LOW",
+    "deadline": "2026-05-10T09:01:51.442341"
+  },
+  {
+    "name": "Прочитать документацию",
+    "description": "Изучить Hibernate",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-11T16:24:31.884521"
+  },
+  {
+    "name": "Подготовить релиз",
+    "description": "Проверить changelog",
+    "priority": "HIGH",
+    "deadline": "2026-05-12T22:18:17.998211"
+  },
+  {
     "name": "Нормально",
     "description": "test2",
     "priority": "LOW",
-    "deadline": "2026-03-24T23:00:20.074437"
+    "deadline": "2026-05-24T23:00:20.074437"
   },
   {
     "name": "Кайф изменён",
     "description": "Нужно покайфовать и норм",
     "priority": "MEDIUM",
-    "deadline": "2026-03-23T13:58:21.6719499"
+    "deadline": "2026-05-23T13:58:21.6719499"
   },
   {
     "name": "Топ",
     "description": "test3",
     "priority": "HIGH",
-    "deadline": "2026-03-22T23:30:31.1500199"
+    "deadline": "2026-05-22T23:30:31.1500199"
   },
   {
     "name": "Test",
     "description": "testing1",
     "priority": "HIGH",
-    "deadline": "2026-03-22T18:00:11.2809958"
+    "deadline": "2026-05-22T18:00:11.2809958"
   },
   {
     "name": "Read books",
     "description": "I gonna read books",
     "priority": "MEDIUM",
-    "deadline": "2026-03-20T00:19:40.2624704"
+    "deadline": "2026-05-20T00:19:40.2624704"
   },
   {
     "name": "Чиллить",
     "description": "Можно чиллить до конца дня",
     "priority": "LOW",
-    "deadline": "2026-03-19T20:12:00"
+    "deadline": "2026-06-19T20:12:00"
   },
   {
     "name": "Ловить рыбу",
     "description": "дадада",
     "priority": "LOW",
-    "deadline": "2026-03-15T08:28:45.9705994"
+    "deadline": "2026-06-15T08:28:45.9705994"
   },
   {
     "name": "Break wall",
     "description": "I gonna break wall",
     "priority": "HIGH",
-    "deadline": "2026-03-24T13:16:48.4248347"
+    "deadline": "2026-06-24T13:16:48.4248347"
   },
   {
     "name": "Jump",
     "description": "I gonna jump",
     "priority": "MEDIUM",
-    "deadline": "2026-05-10T06:58:45.2673631"
+    "deadline": "2026-06-10T06:58:45.2673631"
   },
   {
     "name": "House",
     "description": "Gonna build house",
     "priority": "LOW",
-    "deadline": "2026-03-23T11:17:21.4478729"
+    "deadline": "2026-07-23T11:17:21.4478729"
   },
   {
     "name": "00000",
     "description": "",
     "priority": "HIGH",
-    "deadline": "2026-03-27T22:56:02.1158105"
+    "deadline": "2026-07-27T22:56:02.1158105"
   },
   {
     "name": "Kakat",
     "description": "da",
     "priority": "MEDIUM",
-    "deadline": "2026-03-23T18:56:35.7017985"
+    "deadline": "2026-07-23T18:56:35.7017985"
   },
   {
     "name": "kal",
     "description": "norm",
     "priority": "MEDIUM",
-    "deadline": "2026-03-28T23:05:52.9488715"
+    "deadline": "2026-07-28T23:05:52.9488715"
   },
   {
     "name": "cat",
     "description": "owl",
     "priority": "HIGH",
-    "deadline": "2026-03-31T17:06:24.6377103"
+    "deadline": "2026-07-31T17:06:24.6377103"
   },
   {
     "name": "yes",
     "description": "no",
     "priority": "LOW",
-    "deadline": "2026-05-14T06:46:25.1281506"
+    "deadline": "2026-07-14T06:46:25.1281506"
   },
   {
     "name": "Way",
     "description": "noway",
     "priority": "HIGH",
-    "deadline": "2026-03-28T15:06:44.3712928"
+    "deadline": "2026-07-28T15:06:44.3712928"
   },
   {
     "name": "Building",
     "description": "I want to build a city",
     "priority": "MEDIUM",
-    "deadline": "2026-05-10T13:49:42.3861839"
+    "deadline": "2026-06-10T13:49:42.3861839"
   },
   {
     "name": "Cat",
     "description": "Flying with cat",
     "priority": "LOW",
-    "deadline": "2026-05-16T15:55:49.4515934"
+    "deadline": "2026-06-16T15:55:49.4515934"
+  },
+  {
+    "name": "Сделать зарядку",
+    "description": "Утренние упражнения",
+    "priority": "LOW",
+    "deadline": "2026-05-13T07:14:42.114221"
+  },
+  {
+    "name": "Созвон с командой",
+    "description": "Обсудить статус задач",
+    "priority": "HIGH",
+    "deadline": "2026-05-14T10:44:11.774512"
+  },
+  {
+    "name": "Обновить README",
+    "description": "Добавить инструкции запуска",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-15T13:09:52.991223"
+  },
+  {
+    "name": "Сходить в аптеку",
+    "description": "Купить витамины",
+    "priority": "LOW",
+    "deadline": "2026-05-16T18:21:08.551245"
+  },
+  {
+    "name": "Проверить pull request",
+    "description": "Посмотреть изменения коллеги",
+    "priority": "HIGH",
+    "deadline": "2026-05-17T20:18:34.774112"
+  },
+  {
+    "name": "Настроить IntelliJ",
+    "description": "Добавить полезные плагины",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-18T09:55:12.114552"
+  },
+  {
+    "name": "Постирать вещи",
+    "description": "Запустить стирку",
+    "priority": "LOW",
+    "deadline": "2026-07-19T12:47:09.661245"
+  },
+  {
+    "name": "Написать тесты",
+    "description": "Покрыть сервис unit-тестами",
+    "priority": "HIGH",
+    "deadline": "2026-06-20T16:33:58.775412"
+  },
+  {
+    "name": "Пройти урок",
+    "description": "Посмотреть курс по SQL",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-21T19:22:41.884512"
+  },
+  {
+    "name": "Сделать уборку",
+    "description": "Навести порядок на столе",
+    "priority": "LOW",
+    "deadline": "2026-06-22T08:11:13.331221"
+  },
+  {
+    "name": "Развернуть сервер",
+    "description": "Настроить deployment",
+    "priority": "HIGH",
+    "deadline": "2026-05-23T14:42:44.661144"
+  },
+  {
+    "name": "Купить наушники",
+    "description": "Выбрать беспроводную модель",
+    "priority": "LOW",
+    "deadline": "2026-04-24T17:15:27.771244"
+  },
+  {
+    "name": "Изучить Streams",
+    "description": "Попрактиковаться с Java Stream API",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-25T20:04:16.554112"
+  },
+  {
+    "name": "Сделать deploy",
+    "description": "Выложить новую версию",
+    "priority": "HIGH",
+    "deadline": "2026-05-26T21:55:44.114221"
+  },
+  {
+    "name": "Заказать еду",
+    "description": "Выбрать ужин",
+    "priority": "LOW",
+    "deadline": "2026-06-27T18:09:18.884112"
+  },
+  {
+    "name": "Проверить логи",
+    "description": "Посмотреть ошибки приложения",
+    "priority": "HIGH",
+    "deadline": "2026-06-28T11:31:42.441221"
+  },
+  {
+    "name": "Изучить Git",
+    "description": "Разобраться с rebase",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-01T13:43:59.994521"
+  },
+  {
+    "name": "Сходить за кофе",
+    "description": "Купить зерновой кофе",
+    "priority": "LOW",
+    "deadline": "2026-05-02T09:17:28.114211"
+  },
+  {
+    "name": "Создать ветку",
+    "description": "Начать новую задачу",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-03T15:27:11.778211"
+  },
+  {
+    "name": "Пофиксить UI",
+    "description": "Исправить отображение кнопок",
+    "priority": "HIGH",
+    "deadline": "2026-05-04T19:52:04.881421"
+  },
+  {
+    "name": "Позвонить другу",
+    "description": "Обсудить планы на выходные",
+    "priority": "LOW",
+    "deadline": "2026-05-05T21:10:37.114422"
+  },
+  {
+    "name": "Настроить PostgreSQL",
+    "description": "Создать новую базу",
+    "priority": "HIGH",
+    "deadline": "2026-05-06T08:47:56.664211"
+  },
+  {
+    "name": "Сделать заметку",
+    "description": "Записать полезную идею",
+    "priority": "LOW",
+    "deadline": "2026-06-07T10:34:41.774522"
+  },
+  {
+    "name": "Прочитать статью",
+    "description": "Изучить паттерны проектирования",
+    "priority": "MEDIUM",
+    "deadline": "2026-07-08T16:12:29.441255"
+  },
+  {
+    "name": "Собрать проект",
+    "description": "Запустить Maven package",
+    "priority": "HIGH",
+    "deadline": "2026-06-09T18:54:13.778844"
+  },
+  {
+    "name": "Сходить в магазин",
+    "description": "Купить воду и хлеб",
+    "priority": "LOW",
+    "deadline": "2026-06-10T07:08:44.111222"
+  },
+  {
+    "name": "Подготовить данные",
+    "description": "Собрать статистику",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-11T12:58:11.771245"
+  },
+  {
+    "name": "Проверить авторизацию",
+    "description": "Протестировать login flow",
+    "priority": "HIGH",
+    "deadline": "2026-06-12T14:47:08.884521"
+  },
+  {
+    "name": "Выучить команды Linux",
+    "description": "Попрактиковаться в терминале",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-13T20:28:31.114512"
+  },
+  {
+    "name": "Погладить одежду",
+    "description": "Подготовить вещи на неделю",
+    "priority": "LOW",
+    "deadline": "2026-07-14T22:41:10.664422"
+  },
+  {
+    "name": "Создать Dockerfile",
+    "description": "Настроить контейнер приложения",
+    "priority": "HIGH",
+    "deadline": "2026-06-15T09:15:37.884112"
+  },
+  {
+    "name": "Посмотреть конференцию",
+    "description": "Изучить доклады JavaOne",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-16T11:24:44.991122"
+  },
+  {
+    "name": "Сделать чай",
+    "description": "Отдохнуть 10 минут",
+    "priority": "LOW",
+    "deadline": "2026-05-17T13:18:27.774111"
+  },
+  {
+    "name": "Настроить CI/CD",
+    "description": "Добавить GitHub Actions",
+    "priority": "HIGH",
+    "deadline": "2026-05-18T18:48:39.881255"
+  },
+  {
+    "name": "Изучить Kafka",
+    "description": "Разобраться с брокером сообщений",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-19T20:31:57.114512"
+  },
+  {
+    "name": "Купить клавиатуру",
+    "description": "Выбрать механическую модель",
+    "priority": "LOW",
+    "deadline": "2026-05-20T08:11:44.774125"
+  },
+  {
+    "name": "Исправить конфиг",
+    "description": "Обновить application.yml",
+    "priority": "HIGH",
+    "deadline": "2026-05-21T15:22:11.441212"
+  },
+  {
+    "name": "Пройти собеседование",
+    "description": "Ответить на вопросы по Java",
+    "priority": "HIGH",
+    "deadline": "2026-05-22T17:41:54.884521"
+  },
+  {
+    "name": "Сделать резервную копию",
+    "description": "Сохранить базу данных",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-23T21:17:28.991211"
+  },
+  {
+    "name": "Посмотреть сериал",
+    "description": "Отдохнуть вечером",
+    "priority": "LOW",
+    "deadline": "2026-06-24T23:09:17.551221"
+  },
+  {
+    "name": "Проверить почту",
+    "description": "Ответить на рабочие сообщения",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-02T09:14:11.120431"
+  },
+  {
+    "name": "Купить продукты",
+    "description": "Сходить в супермаркет",
+    "priority": "LOW",
+    "deadline": "2026-05-03T18:25:44.774512"
+  },
+  {
+    "name": "Сделать deploy",
+    "description": "Выложить новую версию приложения",
+    "priority": "HIGH",
+    "deadline": "2026-05-04T14:11:23.991255"
+  },
+  {
+    "name": "Прочитать статью",
+    "description": "Изучить новые возможности Java",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-05T21:44:01.551244"
+  },
+  {
+    "name": "Сходить в спортзал",
+    "description": "Сделать кардио тренировку",
+    "priority": "LOW",
+    "deadline": "2026-05-06T07:19:45.114211"
+  },
+  {
+    "name": "Исправить баг",
+    "description": "Найти ошибку в сервисе",
+    "priority": "HIGH",
+    "deadline": "2026-05-07T13:55:29.884421"
+  },
+  {
+    "name": "Изучить Docker",
+    "description": "Разобраться с volume",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-08T16:28:11.664255"
+  },
+  {
+    "name": "Сделать уборку",
+    "description": "Навести порядок на рабочем месте",
+    "priority": "LOW",
+    "deadline": "2026-05-09T20:11:34.774211"
+  },
+  {
+    "name": "Подготовить отчет",
+    "description": "Собрать статистику по задачам",
+    "priority": "HIGH",
+    "deadline": "2026-05-10T11:49:51.441522"
+  },
+  {
+    "name": "Посмотреть вебинар",
+    "description": "Изучить Spring Boot",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-11T15:17:24.114512"
+  },
+  {
+    "name": "Купить воду",
+    "description": "Заехать в магазин после работы",
+    "priority": "LOW",
+    "deadline": "2026-05-12T18:04:18.551255"
+  },
+  {
+    "name": "Проверить API",
+    "description": "Протестировать endpoints",
+    "priority": "HIGH",
+    "deadline": "2026-05-13T09:41:57.884112"
+  },
+  {
+    "name": "Выучить команды Git",
+    "description": "Попрактиковаться с rebase",
+    "priority": "MEDIUM",
+    "deadline": "2026-05-14T22:13:42.664122"
+  },
+  {
+    "name": "Погулять",
+    "description": "Пройтись по вечернему городу",
+    "priority": "LOW",
+    "deadline": "2026-05-15T19:27:08.114221"
+  },
+  {
+    "name": "Настроить PostgreSQL",
+    "description": "Создать новую таблицу",
+    "priority": "HIGH",
+    "deadline": "2026-05-16T12:58:33.774512"
+  },
+  {
+    "name": "Прочитать документацию",
+    "description": "Изучить JPA Repository",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-01T14:44:21.991122"
+  },
+  {
+    "name": "Сделать кофе",
+    "description": "Приготовить латте",
+    "priority": "LOW",
+    "deadline": "2026-06-02T08:11:54.441255"
+  },
+  {
+    "name": "Обновить зависимости",
+    "description": "Поставить новую версию Gson",
+    "priority": "HIGH",
+    "deadline": "2026-06-03T17:36:19.884221"
+  },
+  {
+    "name": "Изучить Kafka",
+    "description": "Разобраться с consumer group",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-04T20:24:51.664255"
+  },
+  {
+    "name": "Сходить в аптеку",
+    "description": "Купить лекарства",
+    "priority": "LOW",
+    "deadline": "2026-06-05T10:55:27.114422"
+  },
+  {
+    "name": "Настроить nginx",
+    "description": "Добавить reverse proxy",
+    "priority": "HIGH",
+    "deadline": "2026-06-06T15:31:42.774125"
+  },
+  {
+    "name": "Посмотреть курс",
+    "description": "Изучить основы Kubernetes",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-07T18:42:11.551244"
+  },
+  {
+    "name": "Купить фрукты",
+    "description": "Сходить на рынок",
+    "priority": "LOW",
+    "deadline": "2026-06-08T09:07:48.884512"
+  },
+  {
+    "name": "Сделать резервную копию",
+    "description": "Сохранить базу данных",
+    "priority": "HIGH",
+    "deadline": "2026-06-09T21:18:36.664411"
+  },
+  {
+    "name": "Проверить логи",
+    "description": "Посмотреть ошибки приложения",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-10T13:29:57.114512"
+  },
+  {
+    "name": "Сделать зарядку",
+    "description": "Размяться утром",
+    "priority": "LOW",
+    "deadline": "2026-06-11T07:41:17.774522"
+  },
+  {
+    "name": "Исправить верстку",
+    "description": "Подправить отображение формы",
+    "priority": "HIGH",
+    "deadline": "2026-06-12T16:22:44.551211"
+  },
+  {
+    "name": "Изучить Streams",
+    "description": "Попрактиковаться с filter и map",
+    "priority": "MEDIUM",
+    "deadline": "2026-06-13T19:54:08.884521"
+  },
+  {
+    "name": "Постирать вещи",
+    "description": "Запустить стиральную машину",
+    "priority": "LOW",
+    "deadline": "2026-06-14T20:16:22.664211"
+  },
+  {
+    "name": "Создать Dockerfile",
+    "description": "Настроить контейнеризацию",
+    "priority": "HIGH",
+    "deadline": "2026-07-01T11:08:55.114421"
+  },
+  {
+    "name": "Посмотреть конференцию",
+    "description": "Изучить доклады JavaOne",
+    "priority": "MEDIUM",
+    "deadline": "2026-07-02T14:45:18.774411"
+  },
+  {
+    "name": "Сходить за кофе",
+    "description": "Купить зерновой кофе",
+    "priority": "LOW",
+    "deadline": "2026-07-03T09:28:47.551255"
+  },
+  {
+    "name": "Настроить CI/CD",
+    "description": "Добавить GitHub Actions",
+    "priority": "HIGH",
+    "deadline": "2026-07-04T18:57:31.884122"
+  },
+  {
+    "name": "Подготовить релиз",
+    "description": "Собрать changelog",
+    "priority": "MEDIUM",
+    "deadline": "2026-07-05T21:33:09.664255"
+  },
+  {
+    "name": "Заказать еду",
+    "description": "Выбрать ужин",
+    "priority": "LOW",
+    "deadline": "2026-07-06T19:12:41.114211"
+  },
+  {
+    "name": "Проверить авторизацию",
+    "description": "Протестировать login flow",
+    "priority": "HIGH",
+    "deadline": "2026-07-07T13:48:22.774521"
+  },
+  {
+    "name": "Прочитать книгу",
+    "description": "Закончить последнюю главу",
+    "priority": "MEDIUM",
+    "deadline": "2026-07-08T22:04:57.551244"
+  },
+  {
+    "name": "Сходить в магазин",
+    "description": "Купить бытовые товары",
+    "priority": "LOW",
+    "deadline": "2026-07-09T10:17:11.884255"
+  },
+  {
+    "name": "Настроить Redis",
+    "description": "Добавить кеширование запросов",
+    "priority": "HIGH",
+    "deadline": "2026-07-10T15:39:44.664122"
+  },
+  {
+    "name": "Изучить Linux",
+    "description": "Попрактиковаться в терминале",
+    "priority": "MEDIUM",
+    "deadline": "2026-07-11T18:51:26.114512"
   }
 ]

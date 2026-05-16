@@ -51,7 +51,16 @@ public class UISystem {
         if (list.isEmpty()) {
             System.out.println("No tasks to display");
         } else {
+            int spaceCounter = Integer.toString(list.size()).length()-1;
+            int barrier = 10;
             for (int i = 0; i < list.size(); i++) {
+                if (i < barrier-1) {
+                    System.out.print((" ").repeat(spaceCounter));
+                } else {
+                    barrier*=10;
+                    spaceCounter--;
+                    System.out.print((" ").repeat(spaceCounter));
+                }
                 System.out.print((i+1) + ") ");
                 displaySpecificTask(list.get(i), scale);
                 System.out.println();

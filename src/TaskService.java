@@ -37,7 +37,7 @@ public class TaskService {
 
             break;
         }
-        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromSmallestToLargest) {
+        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromLOWtoHiGH) {
             Collections.reverse(sortingList);
         }
         return sortingList;
@@ -45,10 +45,10 @@ public class TaskService {
 
     public List<Task> sortByDeadline(List<Task> list, SortParameters sortFromSmallestToLargestOrLargestToSmallest) {
         List<Task> sortingList = new ArrayList<>(list);
-        // sort from Smallest to Largest deadline
+        // sort from nearest to farthest deadline
         sortingList.sort(Comparator.comparing(Task::getDeadline));
-        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromSmallestToLargest) {
-            // sort from Largest to smallest deadline
+        if (sortFromSmallestToLargestOrLargestToSmallest != SortParameters.fromNearestToFarthest) {
+            // sort from farthest to nearest deadline
             Collections.reverse(sortingList);
         }
         return sortingList;
@@ -67,21 +67,33 @@ public class TaskService {
         exactTask.setDeadline(newDeadline);
     }
     // Searching by first letter of the word
-    public Task searchByFirstLetter(List<Task> list, String name) {
+    public List<Task> searchByFirstLetter(List<Task> list, String name) {
+        ArrayList<Task> allFoundedTasks = new ArrayList<>();
         for (Task task : list) {
             char letter = task.getName().charAt(0);
             if (String.valueOf(letter).equalsIgnoreCase(name)) {
-                return task;
+                allFoundedTasks.add(task);
             }
-        } return null;
+        }
+        if (!allFoundedTasks.isEmpty()) {
+            return allFoundedTasks;
+        } else {
+            return null;
+        }
     }
     // Searching by full name of the word
-    public Task searchByFullName(List<Task> list, String name) {
+    public List<Task> searchByFullName(List<Task> list, String name) {
+        ArrayList<Task> allFoundedTasks = new ArrayList<>();
         for (Task task : list) {
             if (task.getName().equals(name)) {
-                return task;
+                allFoundedTasks.add(task);
             }
-        } return null;
+        }
+        if (!allFoundedTasks.isEmpty()) {
+            return allFoundedTasks;
+        } else {
+            return null;
+        }
     }
 
     public void addToOverdueTaskHours(Task correctTask, int hoursToAdd) {
@@ -114,6 +126,14 @@ public class TaskService {
 
     public void deleteSpecificOverdueTask(List<Task> list, int index) {
         list.remove(index);
+    }
+    public void deleteAllTasks(List<Task> list) {
+        try {
+            list.clear();
+        } catch (Exception e) {
+            System.out.println("Impossible to delete all tasks");
+        }
+
     }
 
     public List<Task> getOverdueTasks(List<Task> list) {
