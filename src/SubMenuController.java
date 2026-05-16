@@ -332,7 +332,11 @@ public class SubMenuController {
             System.out.println("How much " + scale.getValue() + "s would you like to add?");
             int timeToAdd = inputHandler.readNumber(Integer.MAX_VALUE);
             Task correctTask = list.get(trueIndexOfTasks.get(overdueTaskAddTimeAction-1));
-            taskService.addToOverdueTaskHours(correctTask, timeToAdd);
+            if (scale == TaskScale.EVERYDAY) {
+                taskService.addToOverdueTaskHours(correctTask, timeToAdd);
+            } else {
+                taskService.addToOverdueTaskDays(correctTask, timeToAdd);
+            }
             System.out.println("Successfully added more time to overdue " + scale + " task");
         }
     }
