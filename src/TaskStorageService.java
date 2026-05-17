@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskStorageService {
@@ -15,7 +16,7 @@ public class TaskStorageService {
         try (FileWriter writer = new FileWriter(fileName)) {
             gson.toJson(tasks, writer);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Cant save lists data to file");
         }
     }
     public List<Task> loadTasks(String fileName) {
@@ -24,7 +25,7 @@ public class TaskStorageService {
             return gson.fromJson(reader, taskListType);
         } catch (Exception e) {
             System.out.println("Cant load lists data from file");
-            throw new RuntimeException(e);
+            return new ArrayList<>();
         }
     }
 }

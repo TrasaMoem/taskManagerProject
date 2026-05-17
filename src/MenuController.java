@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuController {
-    InputHandler inputHandler = new InputHandler();
-    SubMenuController subMenuController = new SubMenuController();
-    TaskStorageService storage = new TaskStorageService();
-    Statistics statistics = new Statistics();
+    private final InputHandler inputHandler = new InputHandler();
+    private final SubMenuController subMenuController = new SubMenuController();
+    private final Statistics statistics = new Statistics();
+    private final TaskManager taskManager = new TaskManager();
 
-    public void handleMainMenu(List<Task> listOfEverydayTasks, List<Task> listOfGlobalTasks, String EVERYDAY_FILE_NAME, String GLOBAL_FILE_NAME) {
+    public void handleMainMenu() {
         while(true) {
             System.out.println("Choose an action: ");
             System.out.println("1. Add new Task");
@@ -18,27 +18,28 @@ public class MenuController {
             System.out.println("6. Exit");
             int action = inputHandler.readNumber(6);
             if (action == 1) {
-                handleAddMenu(listOfEverydayTasks, listOfGlobalTasks);
+                handleAddMenu(taskManager.getListOfEverydayTasks(), taskManager.getListOfGlobalTasks());
             }
             // Edit tasks action
             else if (action == 2) {
-                handleEditMenu(listOfEverydayTasks, listOfGlobalTasks);
+                handleEditMenu(taskManager.getListOfEverydayTasks(), taskManager.getListOfGlobalTasks());
             }
             // Delete the tasks
             else if (action == 3) {
-                handleDeleteMenu(listOfEverydayTasks, listOfGlobalTasks);
+                handleDeleteMenu(taskManager.getListOfEverydayTasks(), taskManager.getListOfGlobalTasks());
             }
             // Display all tasks
             else if (action == 4) {
-                handleDisplayMenu(listOfEverydayTasks, listOfGlobalTasks);
+                handleDisplayMenu(taskManager.getListOfEverydayTasks(), taskManager.getListOfGlobalTasks());
             }
             // Advanced actions
-            if (action == 5) {
-                handleAdvancedMenu(listOfEverydayTasks, listOfGlobalTasks);
+            else if (action == 5) {
+                handleAdvancedMenu(taskManager.getListOfEverydayTasks(), taskManager.getListOfGlobalTasks());
             }
             // Save data and exit program at all
             else {
-                handleExitMenu(listOfEverydayTasks, listOfGlobalTasks, EVERYDAY_FILE_NAME, GLOBAL_FILE_NAME);
+                taskManager.saveTasks();
+                System.out.println("All data has been saved, Goodbye!");
                 break;
             }
         }
@@ -287,11 +288,5 @@ public class MenuController {
                 break;
             }
         }
-    }
-    public void handleExitMenu(List<Task> listOfEverydayTasks, List<Task> listOfGlobalTasks, String EVERYDAY_FILE_NAME, String GLOBAL_FILE_NAME) {
-        storage.saveTasks(listOfEverydayTasks, EVERYDAY_FILE_NAME);
-        storage.saveTasks(listOfGlobalTasks, GLOBAL_FILE_NAME);
-        System.out.println("All data has been saved, Goodbye!");
-        System.exit(0);
     }
 }

@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class SubMenuController {
-    TaskService taskService = new TaskService();
-    InputHandler inputHandler = new InputHandler();
-    UISystem uiSystem = new UISystem();
+    private final TaskService taskService = new TaskService();
+    private final InputHandler inputHandler = new InputHandler();
+    private final UISystem uiSystem = new UISystem();
 
     public void addActionMenu(Task task, List<Task> list, TaskScale scale) {
         // Task name
